@@ -1,4 +1,4 @@
-# Customers 
+# Users 
 
 from flask import Blueprint, request, jsonify, make_response
 import json
@@ -7,7 +7,7 @@ from src import db
 
 users = Blueprint('customers', __name__)
 
-# Get all customers from the DB
+# return a list of all users
 @users.route('/users', methods=['GET'])
 def get_users():
     cursor = db.get_db().cursor()
@@ -22,3 +22,13 @@ def get_users():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+# Add a new user who joins the platform
+@users.route('/users/add', methods=['POST'])
+def add_user():
+    data = request.get_json()
+    cursor = db.get_db().cursor()
+    query = "INSERT INTO customers (company, last_name, first_name, job_title, business_phone) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(query, (data['company'], data['last_name'], data['first_name'], data['job_title'], data['business_phone']))
+    db.get_db().commit()
+    return make_response(jsonify({"message": "User added successfully"}), 201)

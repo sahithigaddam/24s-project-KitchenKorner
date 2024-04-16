@@ -225,11 +225,10 @@ CREATE TABLE IF NOT EXISTS Keywords_Out (
 
 -- TODO: Update to be receiver and sender
 CREATE TABLE IF NOT EXISTS Direct_Messages (
-    User_ID int NOT NULL,
-    Text text,
+    User_ID int PRIMARY KEY NOT NULL,
+    Message_Text text,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
     Post_ID int NOT NULL,
-    PRIMARY KEY (User_ID, Time_sent),
     CONSTRAINT fk_24 FOREIGN KEY (User_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,

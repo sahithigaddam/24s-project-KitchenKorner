@@ -151,10 +151,11 @@ CREATE TABLE IF NOT EXISTS Cookbook (
 );
 
 CREATE TABLE IF NOT EXISTS External_Messages (
-    Message_ID int PRIMARY KEY AUTO_INCREMENT,
+    Message_ID int AUTO_INCREMENT,
     Post_ID int NOT NULL,
     User_ID int NOT NULL,
-    Text text,
+    Message_Text text,
+    PRIMARY KEY (Message_ID, User_ID)
     CONSTRAINT fk_13 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade,

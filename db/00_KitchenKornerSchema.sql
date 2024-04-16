@@ -22,7 +22,7 @@ flush privileges;
 USE KitchenKorner;
 
 CREATE TABLE IF NOT EXISTS Users (
-    User_ID int PRIMARY KEY,
+    User_ID int PRIMARY KEY AUTO_INCREMENT,
     Username varchar(20) UNIQUE NOT NULL,
     Email varchar(50) UNIQUE NOT NULL,
     Full_Name text NOT NULL,
@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 CREATE TABLE IF NOT EXISTS Filters (
-    Filter_ID int PRIMARY KEY
+    Filter_ID int PRIMARY KEY AUTO_INCREMENT
 );
 
 CREATE TABLE IF NOT EXISTS Posts (
-    Post_ID int PRIMARY KEY,
+    Post_ID int PRIMARY KEY AUTO_INCREMENT,
     User_ID int NOT NULL,
     Created_At datetime NOT NULL DEFAULT current_timestamp,
     Filter_ID int NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
 );
 
 CREATE TABLE IF NOT EXISTS IngredientDetails (
-    Recipe_ID int NOT NULL,
+    Recipe_ID int NOT NULL AUTO_INCREMENT,
     Ingredient_ID int NOT NULL,
     PRIMARY KEY (Recipe_ID, Ingredient_ID),
     CONSTRAINT fk_03 FOREIGN KEY (Recipe_ID)
@@ -82,10 +82,10 @@ CREATE TABLE IF NOT EXISTS IngredientDetails (
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
-    Text text,
+    Comment_Text text,
     User_ID int NOT NULL,
     Timestamp datetime NOT NULL DEFAULT current_timestamp,
-    Comment_ID int PRIMARY KEY,
+    Comment_ID int PRIMARY KEY AUTO_INCREMENT,
     Post_ID int NOT NULL,
     CONSTRAINT fk_05 FOREIGN KEY (User_ID)
         REFERENCES Users(User_ID)
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS Comments (
 );
 
 CREATE TABLE IF NOT EXISTS Ratings (
-    Rating_ID int PRIMARY KEY,
+    Rating_ID int PRIMARY KEY AUTO_INCREMENT,
     Actual_Difficulty ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
     Actual_Time float,
     Taste ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS Feeds (
 );
 
 CREATE TABLE IF NOT EXISTS Cookbook (
-    Cookbook_ID int PRIMARY KEY,
+    Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
     Recipe_ID int NOT NULL,
     User_ID int NOT NULL,
     Modified_Datetime datetime,
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS Cookbook (
 );
 
 CREATE TABLE IF NOT EXISTS External_Messages (
-    Message_ID int PRIMARY KEY,
+    Message_ID int PRIMARY KEY AUTO_INCREMENT,
     Post_ID int NOT NULL,
     User_ID int NOT NULL,
     Text text,
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS Keywords_Out (
 CREATE TABLE IF NOT EXISTS Direct_Messages (
     User_ID int NOT NULL,
     Text text,
-    Time_sent datetime NOT NULL DEFAULT current_timestamp,
+    Time_Sent datetime NOT NULL DEFAULT current_timestamp,
     Post_ID int NOT NULL,
     PRIMARY KEY (User_ID, Time_sent),
     CONSTRAINT fk_24 FOREIGN KEY (User_ID)

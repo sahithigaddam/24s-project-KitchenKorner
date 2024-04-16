@@ -1,4 +1,4 @@
-USE `KitchenKorner`;
+USE KitchenKorner;
 
 INSERT INTO Users (User_ID, Username, Email, Full_Name)
 VALUES (1, 'janelovesfood', 'jane.smith@kitchenkorner.com', 'Jane Smith'),

@@ -9,7 +9,7 @@ recipes = Blueprint('Recipes', __name__)
 @recipes.route('/Recipes', methods=['GET'])
 def get_recipes():
     cursor = db.get_db().cursor()
-    cursor.execute('select Instructions, Image, Meal_Type, Recipe_ID,\
+    cursor.execute('select Instructions, Meal_Type, Recipe_ID,\
         Post_ID, Cuisine, Expected_Time, Expected_Difficulty from Recipes')
     row_headers = [x[0] for x in cursor.description]
     json_data = []

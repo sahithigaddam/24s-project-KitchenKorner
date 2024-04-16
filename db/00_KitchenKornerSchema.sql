@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
     Recipe_Name varchar(30),
     Post_ID int NOT NULL,
     Cuisine varchar(20) NOT NULL,
-    Expected_Time time,
+    Expected_Time float,
     Expected_Difficulty ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
     CONSTRAINT fk_02 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)

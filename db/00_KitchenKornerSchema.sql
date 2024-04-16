@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS Keywords_In (
     CONSTRAINT fk_28 FOREIGN KEY (Filter_ID)
         REFERENCES Filters(Filter_ID)
         ON UPDATE cascade ON DELETE cascade
-);
+);  
 
 CREATE TABLE IF NOT EXISTS Keywords_Out (
     Filter_ID int PRIMARY KEY,

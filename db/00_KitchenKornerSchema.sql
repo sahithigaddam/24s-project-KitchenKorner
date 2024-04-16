@@ -139,6 +139,7 @@ CREATE TABLE IF NOT EXISTS Feeds (
 
 CREATE TABLE IF NOT EXISTS Cookbook (
     Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
+    Cookbook_Name varchar(30),
     Recipe_ID int NOT NULL,
     User_ID int NOT NULL,
     Modified_Datetime datetime,
@@ -149,6 +150,15 @@ CREATE TABLE IF NOT EXISTS Cookbook (
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+CREATE TRIGGER check_cookbook_id_max BEFORE INSERT ON Cookbook
+FOR EACH ROW
+BEGIN
+    IF NEW.Cookbook_ID > 3 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot insert because Cookbook_ID would be greater than 3';
+    END IF;
+END;
+
 
 CREATE TABLE IF NOT EXISTS External_Messages (
     Message_ID int AUTO_INCREMENT,

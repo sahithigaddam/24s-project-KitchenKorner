@@ -3,7 +3,7 @@ import json
 from src import db
 
 
-filters = Blueprint('filters', __name__)
+filters = Blueprint('Filters', __name__)
 
 # Get all the filtered in keywords from the database
 @filters.route('/filters', methods=['GET'])
@@ -180,8 +180,6 @@ def update_keywords_out():
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'Filter updated!'
-
-
 
 
 

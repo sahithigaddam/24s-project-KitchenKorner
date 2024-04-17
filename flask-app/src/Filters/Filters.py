@@ -182,7 +182,6 @@ def update_keywords_out():
     return 'Filter updated!'
 
 
-
 # Delete an inclusive filter 
 @filters.route('/filters/<Filter_ID>', methods=['DELETE'])
 def delete_filter_in(Filter_ID):

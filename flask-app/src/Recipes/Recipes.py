@@ -54,3 +54,37 @@ def update_customers(Recipe_ID):
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'recipe updated!'
+
+# Route to filter recipes based on selected ingredients
+@recipes.route('/recipes', methods=['GET'])
+def filter_recipes():
+    selected_ingredients = request.args.getlist('ingredients')
+
+    # Construct SQL query to filter recipes by selected ingredients
+    query = """
+    SELECT r.Recipe_ID, r.Recipe_Name, r.Meal_Type, r.Cuisine
+    FROM Recipes r
+    INNER JOIN Ingredient_Details id ON r.Recipe_ID = id.Recipe_ID
+    INNER JOIN Ingredients i ON id.Ingredient_ID = i.Ingredient_ID
+    WHERE i.Ingredient_Name IN (%s)
+    GROUP BY r.Recipe_ID
+    """
+
+    # Execute the SQL query
+    cursor = db.cursor()
+    cursor.execute(query, (selected_ingredients,))
+    filtered_recipes = cursor.fetchall()
+
+    # Convert results to JSON format
+    recipes_json = []
+    for recipe in filtered_recipes:
+        recipe_json = {
+            'Recipe_ID': recipe[0],
+            'Recipe_Name': recipe[1],
+            'Meal_Type': recipe[2],
+            'Cuisine': recipe[3]
+        }
+        recipes_json.append(recipe_json)
+
+    cursor.close()
+    return jsonify(recipes_json)

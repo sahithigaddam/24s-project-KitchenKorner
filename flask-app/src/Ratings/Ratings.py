@@ -8,7 +8,7 @@ ratings = Blueprint('ratings', __name__)
 @ratings.route('/ratings/<post_id>', methods=['GET'])
 def get_ratings(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM ratings WHERE post_id = %s', (post_id,))
+    cursor.execute('SELECT * FROM Ratings WHERE Post_ID = %s', (Post_ID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -29,7 +29,7 @@ def update_taste_rating(post_id):
     taste = ratings_info['taste']
 
     cursor = db.get_db().cursor()
-    cursor.execute('UPDATE posts SET rating_id = %s, post_id = %s, user_id = %s, taste = %s', (new_taste_rating, post_id))
+    cursor.execute('UPDATE Posts SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Taste = %s', (New_Taste_Rating, Post_ID))
     db.get_db().commit()
     return 'taste rating updated!'
 
@@ -37,7 +37,7 @@ def update_taste_rating(post_id):
 @ratings.route('/ratings/<post_id>', methods=['DELETE'])
 def delete_rating(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('DELETE FROM ratings WHERE post_id = %s', (post_id,))
+    cursor.execute('DELETE FROM Ratings WHERE Post_ID = %s', (Post_ID))
     db.get_db().commit()
     return make_response(jsonify({"message": "Rating deleted successfully"}), 200)
 
@@ -48,7 +48,7 @@ def add_actual_time_rating(post_id, actual_time):
     user_id = ratings_info['User_ID']
 
     cursor = db.get_db().cursor()
-    cursor.execute('INSERT INTO ratings (post_id, user_id, actual_time) VALUES (%s, %s, %s)', (post_id, user_ID, actual_time))
+    cursor.execute('INSERT INTO Ratings (Post_ID, User_ID, Actual_Time) VALUES (%s, %s, %s)', (Post_ID, User_ID, Actual_Time))
     db.get_db().commit()
     return 'Successfully added new time rating!'
 
@@ -62,7 +62,7 @@ def update_actual_time_rating(post_id, actual_time):
     actual_time = ratings_info['Actual_Time']
 
     cursor = db.get_db().cursor()
-    cursor.execute('UPDATE ratings SET rating_id = %s, post_id = %s, user_id = %s, actual_time = %s', (new_rating_value, post_id, actual_time))
+    cursor.execute('UPDATE Ratings SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Actual_Time = %s', (New_Rating_Value, Post_ID, Actual_Time))
     db.get_db().commit()
     return 'time rating updated!'
 
@@ -73,7 +73,7 @@ def add_actual_difficulty_rating(post_id, actual_difficulty):
     user_id = ratings_info['User_ID']
 
     cursor = db.get_db().cursor()
-    cursor.execute('INSERT INTO ratings (post_id, user_id, actual_difficulty) VALUES (%s, %s, %s)', (post_id, user_id, actual_difficulty))
+    cursor.execute('INSERT INTO Ratings (Post_ID, User_ID, Actual_Difficulty) VALUES (%s, %s, %s)', (Post_ID, User_ID, Actual_Difficulty))
     db.get_db().commit()
     return 'Successfully added difficulty rating!'
 
@@ -87,6 +87,6 @@ def update_actual_difficulty_rating(post_id, actual_difficulty):
     actual_difficulty = rating_info['Actual_Difficulty']
 
     cursor = db.get_db().cursor()
-    cursor.execute('UPDATE ratings SET rating_id = %s, post_id = %s, user_id = %s, actual_difficulty = %s', (new_rating_value, post_id, actual_difficulty))
+    cursor.execute('UPDATE Ratings SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Actual_Difficulty = %s', (New_Rating_Value, Post_ID, Actual_Difficulty))
     db.get_db().commit()
     return 'difficulty rating updated!'

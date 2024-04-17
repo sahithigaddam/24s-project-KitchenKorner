@@ -8,7 +8,7 @@ tags = Blueprint('tags', __name__)
 @tags.route('/tags/<post_id>/<user_id>', methods=['GET'])
 def get_tags(post_id, user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM tags WHERE post_id = %s AND user_id = %s', (post_id, user_id))
+    cursor.execute('SELECT * FROM Tags WHERE Post_ID = %s AND User_ID = %s', (Post_ID, User_ID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

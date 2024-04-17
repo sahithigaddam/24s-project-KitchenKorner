@@ -8,7 +8,7 @@ comments = Blueprint('comments', __name__)
 @comments.route('/comments/<post_id>', methods=['GET'])
 def get_comments(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM comments WHERE post_id = %s', (post_id,))
+    cursor.execute('SELECT * FROM Comments WHERE Post_ID = %s', (Post_ID,))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -23,7 +23,7 @@ def get_comments(post_id):
 @comments.route('/comments/<post_id>', methods=['DELETE'])
 def turn_off_comments(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('DELETE FROM comments WHERE post_id = %s', (post_id,))
+    cursor.execute('DELETE FROM Comments WHERE Post_ID = %s', (Post_ID,))
     db.get_db().commit()
     return make_response(jsonify({"message": "Comments turned off successfully"}), 200)
 
@@ -31,7 +31,7 @@ def turn_off_comments(post_id):
 @comments.route('/comments/<comment_id>/<post_id>/<user_id>', methods=['GET'])
 def get_specific_user_comment(comment_id, post_id, user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM comments WHERE comment_id = %s AND post_id = %s AND user_id = %s', (comment_id, post_id, user_id))
+    cursor.execute('SELECT * FROM Comments WHERE Comment_ID = %s AND Post_ID = %s AND User_ID = %s', (Comment_ID, Post_ID, User_ID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -50,7 +50,7 @@ def add_comment(post_id, user_id):
     text = comments_info['text']
 
     cursor = db.get_db().cursor()
-    cursor.execute('INSERT INTO comments (post_id, user_id, text) VALUES (%s, %s, %s)', (post_id, user_id, text))
+    cursor.execute('INSERT INTO Comments (Post_ID, User_ID, Text) VALUES (%s, %s, %s)', (Post_ID, User_ID, Text))
     db.get_db().commit()
     return 'Succussfully added comment!'
 
@@ -58,6 +58,6 @@ def add_comment(post_id, user_id):
 @comments.route('/comments/<comment_id>/<post_id>/<user_id>', methods=['DELETE'])
 def delete_comment(comment_id, post_id, user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('DELETE FROM comments WHERE comment_id = %s AND post_id = %s AND user_id = %s', (comment_id, post_id, user_id))
+    cursor.execute('DELETE FROM Comments WHERE Comment_ID = %s AND Post_ID = %s AND User_ID = %s', (Comment_ID, Post_ID, User_ID))
     db.get_db().commit()
     return make_response(jsonify({"message": "Comment deleted successfully"}), 200)

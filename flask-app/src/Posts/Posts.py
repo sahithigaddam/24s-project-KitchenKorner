@@ -30,7 +30,7 @@ def create_post(post_id, recipe_id):
     created_at = post_info['Created_At']
     
     cursor = db.get_db().cursor()
-    cursor.execute('INSERT INTO posts (post_id, recipe_id) VALUES (%s, %s)', (post_id, recipe_id))
+    cursor.execute('INSERT INTO Posts (Post_ID, Recipe_ID) VALUES (%s, %s)', (Post_ID, Recipe_ID))
     db.get_db().commit()
     return 'Successfully created a post!'
 
@@ -38,6 +38,6 @@ def create_post(post_id, recipe_id):
 @posts.route('/posts/<post_id>', methods=['DELETE'])
 def archive_post(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('UPDATE posts SET archived = true WHERE post_id = %s', (post_id,))
+    cursor.execute('UPDATE Posts SET archived = true WHERE Post_ID = %s', (Post_ID,))
     db.get_db().commit()
     return make_response(jsonify({"message": "Post archived successfully"}), 200)

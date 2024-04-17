@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
         ON UPDATE cascade ON DELETE cascade
 );
 
-CREATE TABLE IF NOT EXISTS IngredientDetails (
+CREATE TABLE IF NOT EXISTS Ingredient_Details (
     Recipe_ID int NOT NULL AUTO_INCREMENT,
     Ingredient_ID int NOT NULL,
     PRIMARY KEY (Recipe_ID, Ingredient_ID),

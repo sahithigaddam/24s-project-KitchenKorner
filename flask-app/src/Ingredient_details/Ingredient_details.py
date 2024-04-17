@@ -36,6 +36,7 @@ def get_ingredient(Recipe_ID):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Return all ingredients in a recipe
 @ingredient_details.route('/ingredient_details/<Recipe_ID>', methods=['GET'])
 def get_ingredients_for_recipe(Recipe_ID):
     cursor = db.get_db().cursor()

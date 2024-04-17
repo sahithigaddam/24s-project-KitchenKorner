@@ -1,11 +1,11 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
 posts = Blueprint('posts', __name__)
 
 # Create a post with a recipe
-@posts.route('/posts/<int:post_id>/<int:recipe_id>', methods=['POST'])
+@posts.route('/posts/<post_id>/<recipe_id>', methods=['POST'])
 def create_post(post_id, recipe_id):
     post_info = request.json
     current_app.logger.info(post_info)
@@ -20,7 +20,7 @@ def create_post(post_id, recipe_id):
     return 'Successfully created a post!'
 
 # Mark a post as archived
-@posts.route('/posts/<int:post_id>', methods=['DELETE'])
+@posts.route('/posts/<post_id>', methods=['DELETE'])
 def archive_post(post_id):
     cursor = db.get_db().cursor()
     cursor.execute('UPDATE posts SET archived = true WHERE post_id = %s', (post_id,))

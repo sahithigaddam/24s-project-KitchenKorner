@@ -5,7 +5,7 @@ from src import db
 tags = Blueprint('tags', __name__)
 
 # Returns all the users tagged in one post
-@tags.route('/tags/<int:post_id>/<int:user_id>', methods=['GET'])
+@tags.route('/tags/<post_id>/<user_id>', methods=['GET'])
 def get_tags(post_id, user_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM tags WHERE post_id = %s AND user_id = %s', (post_id, user_id))

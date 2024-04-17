@@ -5,7 +5,7 @@ from src import db
 ratings = Blueprint('ratings', __name__)
 
 # Returns all ratings under a post
-@ratings.route('/ratings/<int:post_id>', methods=['GET'])
+@ratings.route('/ratings/<post_id>', methods=['GET'])
 def get_ratings(post_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM ratings WHERE post_id = %s', (post_id,))
@@ -20,7 +20,7 @@ def get_ratings(post_id):
     return the_response
 
 # Update average taste rating of a post
-@ratings.route('/ratings/<int:post_id>', methods=['PUT'])
+@ratings.route('/ratings/<post_id>', methods=['PUT'])
 def update_taste_rating(post_id):
     ratings_info = request.json
     rating_id = ratings_info['Rating_ID']
@@ -34,7 +34,7 @@ def update_taste_rating(post_id):
     return 'taste rating updated!'
 
 # Delete the rating on a post
-@ratings.route('/ratings/<int:post_id>', methods=['DELETE'])
+@ratings.route('/ratings/<post_id>', methods=['DELETE'])
 def delete_rating(post_id):
     cursor = db.get_db().cursor()
     cursor.execute('DELETE FROM ratings WHERE post_id = %s', (post_id,))
@@ -42,7 +42,7 @@ def delete_rating(post_id):
     return make_response(jsonify({"message": "Rating deleted successfully"}), 200)
 
 # Adding a new rating about the actual time to a post
-@ratings.route('/ratings/<int:post_id>/<float:actual_time>', methods=['POST'])
+@ratings.route('/ratings/<post_id>/<actual_time>', methods=['POST'])
 def add_actual_time_rating(post_id, actual_time):
     ratings_info = request.json
     user_id = ratings_info['User_ID']
@@ -53,7 +53,7 @@ def add_actual_time_rating(post_id, actual_time):
     return 'Successfully added new time rating!'
 
 # Update average overall rating of actual time on a post
-@ratings.route('/ratings/<int:post_id>/<float:actual_time>', methods=['PUT'])
+@ratings.route('/ratings/<post_id>/<actual_time>', methods=['PUT'])
 def update_actual_time_rating(post_id, actual_time):
     ratings_info = request.json
     rating_id = ratings_info['Rating_ID']
@@ -67,7 +67,7 @@ def update_actual_time_rating(post_id, actual_time):
     return 'time rating updated!'
 
 # Adding a new rating about the actual difficulty to a post
-@ratings.route('/ratings/<int:post_id>/<float:actual_difficulty>', methods=['POST'])
+@ratings.route('/ratings/<post_id>/<actual_difficulty>', methods=['POST'])
 def add_actual_difficulty_rating(post_id, actual_difficulty):
     ratings_info = request.json
     user_id = ratings_info['User_ID']
@@ -78,7 +78,7 @@ def add_actual_difficulty_rating(post_id, actual_difficulty):
     return 'Successfully added difficulty rating!'
 
 # Update average overall rating of actual difficulty on a post
-@ratings.route('/ratings/<int:post_id>/<float:actual_difficulty>', methods=['PUT'])
+@ratings.route('/ratings/<post_id>/<actual_difficulty>', methods=['PUT'])
 def update_actual_difficulty_rating(post_id, actual_difficulty):
     ratings_info = request.json
     rating_id = ratings_info['Rating_ID']

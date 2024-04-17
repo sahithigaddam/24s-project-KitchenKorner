@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
-search = Blueprint('Search', __name__)
+search = Blueprint('search', __name__)
 
 # Return a list of all usernames for search
-@search.route('/Search/<username>', methods=['GET'])
+@search.route('/search/<username>', methods=['GET'])
 def get_user_search_details(username):
 
     query = 'SELECT Username, Full_Name FROM Users WHERE Username LIKE %' + username
@@ -22,7 +22,7 @@ def get_user_search_details(username):
 
 
 # Add a new user search
-@search.route('/Search', methods=['POST'])
+@search.route('/search', methods=['POST'])
 def search_new_user():
     
     # collecting data from the request object 

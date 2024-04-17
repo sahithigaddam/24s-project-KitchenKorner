@@ -52,7 +52,7 @@ def add_comment(post_id, user_id):
     cursor = db.get_db().cursor()
     cursor.execute('INSERT INTO comments (post_id, user_id, text) VALUES (%s, %s, %s)', (post_id, user_id, text))
     db.get_db().commit()
- return 'Succussfully added comment!'
+    return 'Succussfully added comment!'
 
 # Delete a comment under a post from a specific user
 @comments.route('/comments/<int:comment_id>/<int:post_id>/<int:user_id>', methods=['DELETE'])

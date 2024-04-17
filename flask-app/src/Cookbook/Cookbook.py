@@ -41,7 +41,7 @@ def get_cookbook_details(Cookbook_ID):
     return the_response
 
 # TODO: FIX
-@cookbook.route('/cookbook/<Cookbook_ID', methods=['POST'])
+@cookbook.route('/cookbook/<Cookbook_ID>', methods=['POST'])
 def add_new_recipe(Cookbook_ID):
     
     # collecting data from the request object 

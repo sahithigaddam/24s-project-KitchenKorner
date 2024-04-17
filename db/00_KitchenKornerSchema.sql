@@ -240,3 +240,15 @@ CREATE TABLE IF NOT EXISTS Direct_Messages (
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+CREATE TABLE IF NOT EXISTS Search (
+    Username VARCHAR(20) NOT NULL,
+    User_ID int NOT NULL,
+    PRIMARY KEY (Username, User_ID),
+    CONSTRAINT fk_30 FOREIGN KEY (Username)
+        REFERENCES Users(Username)
+        ON UPDATE cascade ON DELETE cascade,
+    CONSTRAINT fk_31 FOREIGN KEY (User_ID)
+        REFERENCES Users(User_ID)
+        ON UPDATE cascade ON DELETE cascade,
+)

@@ -3,16 +3,16 @@ import json
 from src import db
 
 
-filters = Blueprint('Filters', __name__)
+filters = Blueprint('filters', __name__)
 
 # Get all the filtered in keywords from the database
-@filters.route('/Filters', methods=['GET'])
+@filters.route('/filters', methods=['GET'])
 def get_keywords_in():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of keywords to filter into search
-    cursor.execute('SELECT Filter_Id, Keyword_One, Keyword_Two, Keyword_Three, Keyword_Four, Keyword_Five, Keyword_Six, Keyword_Seven, Keyword_Eight, Keyword_Nine, Keyword_Ten FROM Keywords_In')
+    cursor.execute('SELECT Filter_ID, Keyword_One, Keyword_Two, Keyword_Three, Keyword_Four, Keyword_Five, Keyword_Six, Keyword_Seven, Keyword_Eight, Keyword_Nine, Keyword_Ten FROM Keywords_In')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -33,10 +33,10 @@ def get_keywords_in():
 
 
 # Get all the filtered out keywords from the database
-@filters.route('/Filters', methods=['GET'])
+@filters.route('/filters', methods=['GET'])
 def get_keywords_out():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT Filter_Id, Keyword_One, Keyword_Two, Keyword_Three, Keyword_Four, Keyword_Five, Keyword_Six, Keyword_Seven, Keyword_Eight, Keyword_Nine, Keyword_Ten FROM Keywords_Out')
+    cursor.execute('SELECT Filter_ID, Keyword_One, Keyword_Two, Keyword_Three, Keyword_Four, Keyword_Five, Keyword_Six, Keyword_Seven, Keyword_Eight, Keyword_Nine, Keyword_Ten FROM Keywords_Out')
     column_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -48,7 +48,7 @@ def get_keywords_out():
 ## is post and put different for filters?
 
 # Add a new inclusive filter 
-@filters.route('/Filters', methods=['POST'])
+@filters.route('/filters', methods=['POST'])
 def add_new_filter_in():
     
     # collecting data from the request object 
@@ -91,7 +91,7 @@ def add_new_filter_in():
     return 'Successfully added filter!'
 
 # Add a new exclusive filter
-@filters.route('/Filters', methods=['POST'])
+@filters.route('/filters', methods=['POST'])
 def add_new_filter_out():
     
     # collecting data from the request object 
@@ -134,7 +134,7 @@ def add_new_filter_out():
     return 'Successfully added filter!'
 
 # Update an existing inclusive filter
-@filters.route('/Filters', methods=['PUT'])
+@filters.route('/filters', methods=['PUT'])
 def update_keywords_in():
     filter_info = request.json
     filter_id = filter_info['Filter_ID']
@@ -159,7 +159,7 @@ def update_keywords_in():
 
 
 # Update an existing exclusive filter
-@filters.route('/Filters', methods=['PUT'])
+@filters.route('/filters', methods=['PUT'])
 def update_keywords_out():
     filter_info = request.json
     filter_id = filter_info['Filter_ID']
@@ -184,7 +184,7 @@ def update_keywords_out():
 
 
 # Delete an inclusive filter 
-@filters.route('/Filters/<Filter_ID>', methods=['DELETE'])
+@filters.route('/filters/<Filter_ID>', methods=['DELETE'])
 def delete_filter_in(Filter_ID):
     cursor = db.get_db().cursor()
     query = "DELETE FROM Keywords_In WHERE Filter_ID = %s"
@@ -195,7 +195,7 @@ def delete_filter_in(Filter_ID):
     return make_response(jsonify({"message": "Filter deleted successfully"}), 200)
 
 # Delete an exclusive filter 
-@filters.route('/Filters/<Filter_ID>', methods=['DELETE'])
+@filters.route('/filters/<Filter_ID>', methods=['DELETE'])
 def delete_filter_out(Filter_ID):
     cursor = db.get_db().cursor()
     query = "DELETE FROM Keywords_Out WHERE Filter_ID = %s"

@@ -3,15 +3,15 @@
     # User_ID int NOT NULL,
     # Modified_Datetime datetime,
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
 
-cookbook = Blueprint('Cookbook', __name__)
+cookbook = Blueprint('cookbook', __name__)
 
 # Get all customers from the DB
-@cookbook.route('/Cookbook', methods=['GET'])
+@cookbook.route('/cookbook', methods=['GET'])
 def get_cookbook():
     cursor = db.get_db().cursor()
     cursor.execute('select Cookbook_ID, Recipe_ID, User_ID, Modified_Datetime from Cookbook')
@@ -55,7 +55,7 @@ def add_new_recipe(Cookbook_ID):
     category = the_data['product_category']
 
     # Constructing the query
-    query = 'insert into cookbook (product_name, description, category, list_price) values ("'
+    query = 'insert into Cookbook (product_name, description, category, list_price) values ("'
     query += name + '", "'
     query += description + '", "'
     query += category + '", '

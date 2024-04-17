@@ -4,9 +4,9 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-external_messages = Blueprint('External_Messages', __name__)
+external_messages = Blueprint('external_messages', __name__)
 
-@external_messages.route('/external_messages/<int:user_id>', methods=['GET'])
+@external_messages.route('/external_messages/<user_id>', methods=['GET'])
 def get_external_message(user_id):
     cursor = db.get_db().cursor()
     query = "SELECT message FROM external_messages WHERE user_id = %s"

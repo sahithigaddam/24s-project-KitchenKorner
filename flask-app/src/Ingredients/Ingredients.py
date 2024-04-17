@@ -3,10 +3,10 @@ import json
 from src import db
 
 
-ingredients = Blueprint('Ingredients', __name__)
+ingredients = Blueprint('ingredients', __name__)
 
 # Get all customers from the DB
-@ingredients.route('/Ingredients', methods=['GET'])
+@ingredients.route('/ingredients', methods=['GET'])
 def get_ingredients():
     cursor = db.get_db().cursor()
     cursor.execute('select Amount, Ingredient_ID,\

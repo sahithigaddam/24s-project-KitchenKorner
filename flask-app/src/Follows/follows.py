@@ -4,9 +4,9 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-follows = Blueprint('Follows', __name__)
+follows = Blueprint('follows', __name__)
 
-@follows.route('/followers/followee_id>', methods=['GET'])
+@follows.route('/follows/<followee_id>', methods=['GET'])
 def get_followers(user_id):
     cursor = db.get_db().cursor()
     query = "SELECT follower_id FROM follows WHERE user_id = %s"
@@ -14,7 +14,7 @@ def get_followers(user_id):
     followers = cursor.fetchall()
     return make_response(jsonify({"followers": followers}), 200)
 
-@follows.route('/followers', methods=['POST'])
+@follows.route('/follows', methods=['POST'])
 def add_follower():
     data = request.get_json()
     cursor = db.get_db().cursor()
@@ -23,7 +23,7 @@ def add_follower():
     db.get_db().commit()
     return make_response(jsonify({"message": "Follower added successfully"}), 201)
 
-@follows.route('/followers', methods=['DELETE'])
+@follows.route('/follows', methods=['DELETE'])
 def remove_follower():
     data = request.get_json()
     cursor = db.get_db().cursor()

@@ -1,22 +1,22 @@
--- This file is to bootstrap a database for the CS3200 project. 
+-- This file is to bootstrap a database for the CS3200 project.
 
 -- Create a new database.  You can change the name later.  You'll
--- need this name in the FLASK API file(s),  the AppSmith 
+-- need this name in the FLASK API file(s),  the AppSmith
 -- data source creation.
 DROP DATABASE IF EXISTS KitchenKorner;
 
 CREATE DATABASE IF NOT EXISTS KitchenKorner;
--- Via the Docker Compose file, a special user called webapp will 
--- be created in MySQL. We are going to grant that user 
--- all privilages to the new database we just created. 
--- TODO: If you changed the name of the database above, you need 
+-- Via the Docker Compose file, a special user called webapp will
+-- be created in MySQL. We are going to grant that user
+-- all privilages to the new database we just created.
+-- TODO: If you changed the name of the database above, you need
 -- to change it here too.
 grant all privileges on KitchenKorner.* to 'webapp'@'%';
 flush privileges;
 
 -- Move into the database we just created.
 -- TODO: If you changed the name of the database above, you need to
--- change it here too. 
+-- change it here too.
 
 
 USE KitchenKorner;
@@ -69,6 +69,8 @@ CREATE TABLE IF NOT EXISTS Recipes (
         ON UPDATE cascade ON DELETE cascade
 );
 
+#DROP TABLE IF EXISTS Ingredient_Details;
+
 CREATE TABLE IF NOT EXISTS Ingredient_Details (
     Recipe_ID int NOT NULL AUTO_INCREMENT,
     Ingredient_ID int NOT NULL,
@@ -80,6 +82,8 @@ CREATE TABLE IF NOT EXISTS Ingredient_Details (
         REFERENCES Ingredients(Ingredient_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+#DROP TABLE IF EXISTS Comments;
 
 CREATE TABLE IF NOT EXISTS Comments (
     Comment_Text text,
@@ -94,6 +98,8 @@ CREATE TABLE IF NOT EXISTS Comments (
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+#DROP TABLE IF EXISTS Ratings;
 
 CREATE TABLE IF NOT EXISTS Ratings (
     Rating_ID int PRIMARY KEY AUTO_INCREMENT,
@@ -110,6 +116,8 @@ CREATE TABLE IF NOT EXISTS Ratings (
         ON UPDATE cascade ON DELETE cascade
 );
 
+#DROP TABLE IF EXISTS Follows;
+
 CREATE TABLE IF NOT EXISTS Follows (
     Followee_ID int NOT NULL,
     Follower_ID int NOT NULL,
@@ -121,6 +129,8 @@ CREATE TABLE IF NOT EXISTS Follows (
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+#DROP TABLE IF EXISTS Feeds;
 
 CREATE TABLE IF NOT EXISTS Feeds (
     Following_ID int NOT NULL,
@@ -137,11 +147,14 @@ CREATE TABLE IF NOT EXISTS Feeds (
         ON UPDATE cascade ON DELETE cascade
 );
 
+#DROP TABLE IF EXISTS Cookbook;
+
 CREATE TABLE IF NOT EXISTS Cookbook (
-    Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
+    Cookbook_ID int PRIMARY KEY,
     Recipe_ID int NOT NULL,
     User_ID int NOT NULL,
-    Modified_Datetime datetime,
+    Cookbook_Name varchar(100),
+    Created_At datetime,
     CONSTRAINT fk_11 FOREIGN KEY (Recipe_ID)
         REFERENCES Recipes(Recipe_ID)
         ON UPDATE cascade ON DELETE cascade,
@@ -150,11 +163,13 @@ CREATE TABLE IF NOT EXISTS Cookbook (
         ON UPDATE cascade ON DELETE cascade
 );
 
+DROP TABLE IF EXISTS External_Messages;
+
 CREATE TABLE IF NOT EXISTS External_Messages (
     Message_ID int PRIMARY KEY AUTO_INCREMENT,
+    Message_Text text,
     Post_ID int NOT NULL,
     User_ID int NOT NULL,
-    Text text,
     CONSTRAINT fk_13 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade,
@@ -163,7 +178,8 @@ CREATE TABLE IF NOT EXISTS External_Messages (
         ON UPDATE cascade ON DELETE cascade
 );
 
--- TODO: change tag id to user id
+#DROP TABLE IF EXISTS Tags;
+
 CREATE TABLE IF NOT EXISTS Tags (
     Post_ID int NOT NULL,
     User_ID int,
@@ -176,6 +192,8 @@ CREATE TABLE IF NOT EXISTS Tags (
         ON UPDATE cascade ON DELETE cascade
 );
 
+#DROP TABLE IF EXISTS Recipe_Cookbook;
+
 CREATE TABLE IF NOT EXISTS Recipe_Cookbook (
     Recipe_ID int NOT NULL,
     Cookbook_ID int NOT NULL,
@@ -187,6 +205,8 @@ CREATE TABLE IF NOT EXISTS Recipe_Cookbook (
         REFERENCES Cookbook(Cookbook_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+#DROP TABLE IF EXISTS Keywords_In;
 
 CREATE TABLE IF NOT EXISTS Keywords_In (
     Filter_ID int PRIMARY KEY,
@@ -204,6 +224,8 @@ CREATE TABLE IF NOT EXISTS Keywords_In (
         REFERENCES Filters(Filter_ID)
         ON UPDATE cascade ON DELETE cascade
 );
+
+#DROP TABLE IF EXISTS Keywords_Out;
 
 CREATE TABLE IF NOT EXISTS Keywords_Out (
     Filter_ID int PRIMARY KEY,
@@ -228,14 +250,14 @@ CREATE TABLE IF NOT EXISTS Direct_Messages (
     Sender_ID int NOT NULL,
     Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
-    Post_ID int,     
+    Post_ID int,
     PRIMARY KEY (Receiver_ID, Sender_ID, Time_sent),
     CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,
     CONSTRAINT fk_25 FOREIGN KEY (Sender_ID)
         REFERENCES Users(User_ID)
-        ON UPDATE cascade ON DELETE cascade,    
+        ON UPDATE cascade ON DELETE cascade,
     CONSTRAINT fk_26 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade

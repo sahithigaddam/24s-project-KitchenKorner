@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Ingredients (
 
 CREATE TABLE IF NOT EXISTS Recipes (
     Instructions text,
-    Recipe_Image blob,
+    Recipe_Image varchar(100),
     Meal_Type varchar(30) NOT NULL,
     Recipe_ID int PRIMARY KEY,
     Recipe_Name varchar(30),

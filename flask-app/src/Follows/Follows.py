@@ -6,13 +6,20 @@ from src import db
 
 follows = Blueprint('follows', __name__)
 
+# Get followers for particular user
 @follows.route('/follows/<followee_id>', methods=['GET'])
 def get_followers(user_id):
     cursor = db.get_db().cursor()
-    query = "SELECT Follower_ID FROM Follows WHERE Followee_ID = %s"
-    cursor.execute(query, (user_id,))
-    followers = cursor.fetchall()
-    return make_response(jsonify({"followers": followers}), 200)
+    cursor.execute('SELECT * FROM Follows WHERE Followee_ID = {0}'.format(user_id))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 @follows.route('/follows', methods=['POST'])
 def add_follower():

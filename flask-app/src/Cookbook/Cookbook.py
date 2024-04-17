@@ -10,7 +10,7 @@ from src import db
 
 cookbook = Blueprint('cookbook', __name__)
 
-# Get all customers from the DB
+# Get all cookbooks from the DB
 @cookbook.route('/cookbook', methods=['GET'])
 def get_cookbook():
     cursor = db.get_db().cursor()
@@ -25,7 +25,7 @@ def get_cookbook():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get customer detail for customer with particular userID
+# Get particular cookbook
 @cookbook.route('/cookbook/<Cookbook_ID>', methods=['GET'])
 def get_cookbook_details(Cookbook_ID):
     cursor = db.get_db().cursor()
@@ -40,7 +40,7 @@ def get_cookbook_details(Cookbook_ID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# TODO: FIX
+# Add new cookbook
 @cookbook.route('/cookbook/<Cookbook_ID>', methods=['POST'])
 def add_new_recipe(Cookbook_ID):
     
@@ -49,17 +49,15 @@ def add_new_recipe(Cookbook_ID):
     current_app.logger.info(the_data)
 
     #extracting the variable
-    name = the_data['product_name']
-    description = the_data['product_description']
-    price = the_data['product_price']
-    category = the_data['product_category']
+    recipe = the_data['Recipe_ID']
+    user = the_data['User_ID']
+    cookbook_name = the_data['Cookbook_Namee']
 
     # Constructing the query
-    query = 'insert into Cookbook (product_name, description, category, list_price) values ("'
-    query += name + '", "'
-    query += description + '", "'
-    query += category + '", '
-    query += str(price) + ')'
+    query = 'insert into Cookbook (Recipe_ID, User_ID, Cookbook_Name) values ("'
+    query += recipe + '", "'
+    query += user + '", "'
+    query += cookbook_name + ')'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 

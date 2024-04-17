@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Posts (
 
 CREATE TABLE IF NOT EXISTS Ingredients (
     Amount int,
-    Ingredient_ID int PRIMARY KEY ,
+    Ingredient_ID int PRIMARY KEY AUTO_INCREMENT,
     Price float,
     Store varchar(30),
     Ingredient_Name varchar(20)
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
     Instructions text,
     Recipe_Image varchar(100),
     Meal_Type varchar(30) NOT NULL,
-    Recipe_ID int PRIMARY KEY,
+    Recipe_ID int PRIMARY KEY AUTO_INCREMENT,
     Recipe_Name varchar(30),
     Post_ID int NOT NULL,
     Cuisine varchar(20) NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS Feeds (
 #DROP TABLE IF EXISTS Cookbook;
 
 CREATE TABLE IF NOT EXISTS Cookbook (
-    Cookbook_ID int PRIMARY KEY,
+    Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
     Recipe_ID int NOT NULL,
     User_ID int NOT NULL,
     Cookbook_Name varchar(100),

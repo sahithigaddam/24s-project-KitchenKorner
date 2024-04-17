@@ -35,16 +35,43 @@ def create_app():
     # Import the various Beluprint Objects
     from src.customers.customers import customers
     from src.products.products  import products
-    from src.filters.filters import filters
+    from src.Comments.Comments import comments
+    from src.Cookbook.Cookbook import cookbook
+    from src.Direct_Messages.Direct_Messages import direct_messages
+    from src.External_Messages.External_Messages import external_messages
+    from src.Filters.Filters import filters
+    from src.Follows.Follows import follows
+    from src.Ingredient_Details.Ingredient_Details import ingredient_details
+    from src.Ingredients.Ingredients import ingredients
+    from src.Posts.Posts import posts
+    from src.Ratings.Ratings import ratings
+    from src.Recipe_Cookbook.Recipe_Cookbook import recipe_cookbook
     from src.Recipes.Recipes import recipes
+    from src.Search.Search import search
+    from src.Tags.Tags import tags
+    from src.Users.Users import users
 
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     app.register_blueprint(customers,   url_prefix='/c')
     app.register_blueprint(products,    url_prefix='/p')
+    app.register_blueprint(comments,    url_prefix='/c')
+    app.register_blueprint(cookbook,    url_prefix='/c')
+    app.register_blueprint(direct_messages,    url_prefix='/d')
+    app.register_blueprint(external_messages,    url_prefix='/e')
     app.register_blueprint(filters,    url_prefix='/f')
+    app.register_blueprint(follows,    url_prefix='/f')
+    app.register_blueprint(ingredient_details,    url_prefix='/i')
+    app.register_blueprint(ingredients,    url_prefix='/i')
+    app.register_blueprint(posts,    url_prefix='/p')
+    app.register_blueprint(ratings,    url_prefix='/r')
+    app.register_blueprint(recipe_cookbook,    url_prefix='/r')
     app.register_blueprint(recipes,    url_prefix='/r')
+    app.register_blueprint(search,    url_prefix='/s')
+    app.register_blueprint(tags,    url_prefix='/t')
+    app.register_blueprint(users,    url_prefix='/u')
+
 
 
     # Don't forget to return the app object

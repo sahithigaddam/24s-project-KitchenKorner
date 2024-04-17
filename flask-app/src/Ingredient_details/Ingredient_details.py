@@ -3,7 +3,7 @@ import json
 from src import db
 
 
-ingredient_details = Blueprint('IngredientDetails', __name__)
+ingredient_details = Blueprint('Ingredient_Details', __name__)
 
 # Get all customers from the DB
 @ingredient_details.route('/IngredientDetails', methods=['GET'])

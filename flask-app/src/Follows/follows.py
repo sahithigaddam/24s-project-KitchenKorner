@@ -4,6 +4,8 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
+follows = Blueprint('Follows', __name__)
+
 @follows.route('/followers/followee_id>', methods=['GET'])
 def get_followers(user_id):
     cursor = db.get_db().cursor()

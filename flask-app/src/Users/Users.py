@@ -26,7 +26,7 @@ def get_users():
 def add_user():
     data = request.get_json()
     cursor = db.get_db().cursor()
-    query = "INSERT INTO users (User_ID, Username, Email, Full_Name, Created_At) VALUES (%s, %s, %s, %s, %s)"
+    query = "INSERT INTO Users (User_ID, Username, Email, Full_Name, Created_At) VALUES (%s, %s, %s, %s, %s)"
     cursor.execute(query, (data['User_ID'], data['Username'], data['Email'], data['Full_Name'], data['Created_At']))
     db.get_db().commit()
     return make_response(jsonify({"message": "User added successfully"}), 201)
@@ -35,7 +35,7 @@ def add_user():
 @users.route('/users', methods=['DELETE'])
 def delete_user(user_id):
     cursor = db.get_db().cursor()
-    query = "DELETE FROM customers WHERE id = %s"
+    query = "DELETE FROM Users WHERE User_ID = %s"
     cursor.execute(query, (user_id,))
     db.get_db().commit()
     return make_response(jsonify({"message": "User deleted successfully"}), 200)

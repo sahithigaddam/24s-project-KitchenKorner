@@ -9,7 +9,7 @@ direct_messages = Blueprint('direct_messages', __name__)
 @direct_messages.route('/direct_messages/<sender_id>', methods=['GET'])
 def get_direct_message(sender_id):
     cursor = db.get_db().cursor()
-    query = "SELECT message FROM direct_messages WHERE sender_id = %s"
+    query = "SELECT Message_Text FROM Direct_Messages WHERE Sender_ID = %s"
     cursor.execute(query, (sender_id,))
     message = cursor.fetchone()
     return make_response(jsonify({"message": message}), 200)
@@ -18,7 +18,7 @@ def get_direct_message(sender_id):
 def send_direct_message():
     data = request.get_json()
     cursor = db.get_db().cursor()
-    query = "INSERT INTO direct_messages (sender_id, recipient_id, message) VALUES (%s, %s, %s)"
-    cursor.execute(query, (data['sender_id'], data['recipient_id'], data['message']))
+    query = "INSERT INTO Direct_Messages (Receiver_ID, Sender_ID, Message_Text, User_ID) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (data['Receiver_ID'], data['Sender_ID'], data['Message_Text'], data['User_ID']))
     db.get_db().commit()
     return make_response(jsonify({"message": "Direct message sent successfully"}), 201)

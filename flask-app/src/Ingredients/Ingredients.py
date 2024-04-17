@@ -36,6 +36,7 @@ def get_ingredient(Ingredient_ID):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Adding a new ingredient
 @ingredients.route('/ingredients', methods=['POST'])
 def add_new_ingredient():
     
@@ -64,6 +65,7 @@ def add_new_ingredient():
     
     return 'Success!'
 
+# Update the price of an ingredient
 @ingredients.route('/ingredients/<Ingredient_ID>', methods=['PUT'])
 def update_ingredient_price(Ingredient_ID):
     ingredient_info = request.json

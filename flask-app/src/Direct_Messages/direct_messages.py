@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
+# Returns direct message from sender
 @direct_messages.route('/direct_messages/<sender_id>', methods=['GET'])
 def get_direct_message(sender_id):
     cursor = db.get_db().cursor()
@@ -12,6 +13,7 @@ def get_direct_message(sender_id):
     message = cursor.fetchone()
     return make_response(jsonify({"message": message}), 200)
 
+# Sending a direct message to a user
 @direct_messages.route('/direct_messages', methods=['POST'])
 def send_direct_message():
     data = request.get_json()

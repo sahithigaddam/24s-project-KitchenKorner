@@ -1,11 +1,11 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
 comments = Blueprint('comments', __name__)
 
 # Returns all comments under a post
-@comments.route('/comments/<int:post_id>', methods=['GET'])
+@comments.route('/comments/<post_id>', methods=['GET'])
 def get_comments(post_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM comments WHERE post_id = %s', (post_id,))
@@ -20,7 +20,7 @@ def get_comments(post_id):
     return the_response
 
 # Turn off comments under a post
-@comments.route('/comments/<int:post_id>', methods=['DELETE'])
+@comments.route('/comments/<post_id>', methods=['DELETE'])
 def turn_off_comments(post_id):
     cursor = db.get_db().cursor()
     cursor.execute('DELETE FROM comments WHERE post_id = %s', (post_id,))
@@ -28,7 +28,7 @@ def turn_off_comments(post_id):
     return make_response(jsonify({"message": "Comments turned off successfully"}), 200)
 
 # Returns the comment of a specific user under a post
-@comments.route('/comments/<int:comment_id>/<int:post_id>/<int:user_id>', methods=['GET'])
+@comments.route('/comments/<comment_id>/<post_id>/<user_id>', methods=['GET'])
 def get_specific_user_comment(comment_id, post_id, user_id):
     cursor = db.get_db().cursor()
     cursor.execute('SELECT * FROM comments WHERE comment_id = %s AND post_id = %s AND user_id = %s', (comment_id, post_id, user_id))
@@ -43,10 +43,10 @@ def get_specific_user_comment(comment_id, post_id, user_id):
     return the_response
 
 # Specific user adding a comment to a post
-@comments.route('/comments/<int:post_id>/<int:user_id>', methods=['POST'])
+@comments.route('/comments/<post_id>/<user_id>', methods=['POST'])
 def add_comment(post_id, user_id):
     comments_info = request.json
-    current_app.logger.info(post_info)
+    current_app.logger.info(comments_info)
     text = comments_info['text']
 
     cursor = db.get_db().cursor()
@@ -55,7 +55,7 @@ def add_comment(post_id, user_id):
     return 'Succussfully added comment!'
 
 # Delete a comment under a post from a specific user
-@comments.route('/comments/<int:comment_id>/<int:post_id>/<int:user_id>', methods=['DELETE'])
+@comments.route('/comments/<comment_id>/<post_id>/<user_id>', methods=['DELETE'])
 def delete_comment(comment_id, post_id, user_id):
     cursor = db.get_db().cursor()
     cursor.execute('DELETE FROM comments WHERE comment_id = %s AND post_id = %s AND user_id = %s', (comment_id, post_id, user_id))

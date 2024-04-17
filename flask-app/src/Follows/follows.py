@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
+# Return a list of followers for a specific user
 @follows.route('/followers/followee_id>', methods=['GET'])
 def get_followers(user_id):
     cursor = db.get_db().cursor()
@@ -12,6 +13,7 @@ def get_followers(user_id):
     followers = cursor.fetchall()
     return make_response(jsonify({"followers": followers}), 200)
 
+# Adding a new follower to a user 
 @follows.route('/followers', methods=['POST'])
 def add_follower():
     data = request.get_json()
@@ -21,6 +23,7 @@ def add_follower():
     db.get_db().commit()
     return make_response(jsonify({"message": "Follower added successfully"}), 201)
 
+# Follower unfollows the followee
 @follows.route('/followers', methods=['DELETE'])
 def remove_follower():
     data = request.get_json()

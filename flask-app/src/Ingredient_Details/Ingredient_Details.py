@@ -25,7 +25,7 @@ def get_ingredient_details():
 @ingredient_details.route('/ingredient_details/<Recipe_ID>', methods=['GET'])
 def get_ingredient(Recipe_ID):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Recipes where Recipe_ID = {0}'.format(userID))
+    cursor.execute('select * from Recipes where Recipe_ID = {0}'.format(Recipe_ID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

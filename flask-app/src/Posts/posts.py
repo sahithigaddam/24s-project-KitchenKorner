@@ -4,6 +4,21 @@ from src import db
 
 posts = Blueprint('posts', __name__)
 
+# Get customer detail for customer with particular userID
+@posts.route('/posts/<User_ID>', methods=['GET'])
+def get_customer(User_ID):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Posts where User_ID = {0}'.format(User_ID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 # Create a post with a recipe
 @posts.route('/posts/<post_id>/<recipe_id>', methods=['POST'])
 def create_post(post_id, recipe_id):

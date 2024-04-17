@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS Direct_Messages (
     Sender_ID int NOT NULL,
     Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
-    Post_ID int,     -- does every DM have to include a post? what if the user just wants to say hi or ask for advice, etc?
+    Post_ID int,     
     PRIMARY KEY (Receiver_ID, Sender_ID, Time_sent),
     CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
         REFERENCES Users(User_ID)

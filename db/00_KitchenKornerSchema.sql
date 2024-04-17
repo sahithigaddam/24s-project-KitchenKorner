@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Ingredient_Details (
 CREATE TABLE IF NOT EXISTS Comments (
     Comment_Text text,
     User_ID int NOT NULL,
-    Timestamp datetime NOT NULL DEFAULT current_timestamp,
+    Created_At datetime NOT NULL DEFAULT current_timestamp,
     Comment_ID int PRIMARY KEY AUTO_INCREMENT,
     Post_ID int NOT NULL,
     CONSTRAINT fk_05 FOREIGN KEY (User_ID)
@@ -250,5 +250,5 @@ CREATE TABLE IF NOT EXISTS Search (
         ON UPDATE cascade ON DELETE cascade,
     CONSTRAINT fk_31 FOREIGN KEY (User_ID)
         REFERENCES Users(User_ID)
-        ON UPDATE cascade ON DELETE cascade,
+        ON UPDATE cascade ON DELETE cascade
 );

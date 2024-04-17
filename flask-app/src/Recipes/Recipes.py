@@ -36,6 +36,7 @@ def get_recipe(Recipe_ID):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Update attributes for this {recipe_id}
 @recipes.route('/recipes/<Recipe_ID>', methods=['PUT'])
 def update_customers(Recipe_ID):
     recipe_info = request.json

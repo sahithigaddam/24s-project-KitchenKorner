@@ -251,4 +251,4 @@ CREATE TABLE IF NOT EXISTS Search (
     CONSTRAINT fk_31 FOREIGN KEY (User_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,
-)
+);

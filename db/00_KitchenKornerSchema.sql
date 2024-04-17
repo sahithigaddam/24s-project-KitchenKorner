@@ -250,8 +250,8 @@ CREATE TABLE IF NOT EXISTS Direct_Messages (
     Sender_ID int NOT NULL,
     Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
-    Post_ID int,
-    PRIMARY KEY (Receiver_ID, Sender_ID, Time_sent),
+    Post_ID int,     
+    PRIMARY KEY (Receiver_ID, Sender_ID, Time_Sent),
     CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,

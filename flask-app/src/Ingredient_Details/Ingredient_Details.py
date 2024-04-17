@@ -9,7 +9,7 @@ ingredient_details = Blueprint('ingredient_details', __name__)
 @ingredient_details.route('/ingredient_details', methods=['GET'])
 def get_ingredient_details():
     cursor = db.get_db().cursor()
-    cursor.execute('select Recipe_ID, Ingredient_ID from IngredientDetails')
+    cursor.execute('select Recipe_ID, Ingredient_ID from Ingredient_Details')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -41,9 +41,9 @@ def get_ingredients_for_recipe(Recipe_ID):
     cursor = db.get_db().cursor()
     cursor.execute('''
         SELECT Ingredients.* 
-        FROM IngredientDetails 
-        JOIN Ingredients ON IngredientDetails.Ingredient_ID = Ingredients.Ingredient_ID 
-        WHERE IngredientDetails.Recipe_ID = %s
+        FROM Ingredient_Details 
+        JOIN Ingredients ON Ingredient_Details.Ingredient_ID = Ingredients.Ingredient_ID 
+        WHERE Ingredient_Details.Recipe_ID = %s
     ''', (Recipe_ID,))
     row_headers = [x[0] for x in cursor.description]
     json_data = []

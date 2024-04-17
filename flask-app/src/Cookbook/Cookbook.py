@@ -41,6 +41,7 @@ def get_cookbook_details(Cookbook_ID):
     return the_response
 
 # TODO: FIX
+# Adding a new recipe to the cookbook
 @cookbook.route('/cookbook/<Cookbook_ID', methods=['POST'])
 def add_new_recipe(Cookbook_ID):
     

@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS Keywords_Out (
         ON UPDATE cascade ON DELETE cascade
 );
 
--- TODO: Update to be receiver and sender
+
 CREATE TABLE IF NOT EXISTS Direct_Messages (
     Receiver_ID int NOT NULL,
     Sender_ID int NOT NULL,

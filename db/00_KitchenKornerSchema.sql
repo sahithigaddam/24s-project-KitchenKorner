@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Ingredients (
 
 CREATE TABLE IF NOT EXISTS Recipes (
     Instructions text,
-    Image varchar(300),
+    Image blob,
     Meal_Type varchar(30) NOT NULL,
     Recipe_ID int PRIMARY KEY,
     Recipe_Name varchar(30),
@@ -139,7 +139,6 @@ CREATE TABLE IF NOT EXISTS Feeds (
 
 CREATE TABLE IF NOT EXISTS Cookbook (
     Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
-    Cookbook_Name varchar(30),
     Recipe_ID int NOT NULL,
     User_ID int NOT NULL,
     Modified_Datetime datetime,
@@ -151,21 +150,11 @@ CREATE TABLE IF NOT EXISTS Cookbook (
         ON UPDATE cascade ON DELETE cascade
 );
 
-CREATE TRIGGER check_cookbook_id_max BEFORE INSERT ON Cookbook
-FOR EACH ROW
-BEGIN
-    IF NEW.Cookbook_ID > 3 THEN 
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot insert because Cookbook_ID would be greater than 3';
-    END IF;
-END;
-
-
 CREATE TABLE IF NOT EXISTS External_Messages (
-    Message_ID int AUTO_INCREMENT,
+    Message_ID int PRIMARY KEY AUTO_INCREMENT,
     Post_ID int NOT NULL,
     User_ID int NOT NULL,
-    Message_Text text,
-    PRIMARY KEY (Message_ID, User_ID)
+    Text text,
     CONSTRAINT fk_13 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade,
@@ -214,7 +203,7 @@ CREATE TABLE IF NOT EXISTS Keywords_In (
     CONSTRAINT fk_28 FOREIGN KEY (Filter_ID)
         REFERENCES Filters(Filter_ID)
         ON UPDATE cascade ON DELETE cascade
-);  
+);
 
 CREATE TABLE IF NOT EXISTS Keywords_Out (
     Filter_ID int PRIMARY KEY,
@@ -235,14 +224,19 @@ CREATE TABLE IF NOT EXISTS Keywords_Out (
 
 -- TODO: Update to be receiver and sender
 CREATE TABLE IF NOT EXISTS Direct_Messages (
-    User_ID int PRIMARY KEY NOT NULL,
-    Message_Text text,
+    Receiver_ID int NOT NULL,
+    Sender_ID int NOT NULL,
+    Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
-    Post_ID int NOT NULL,
-    CONSTRAINT fk_24 FOREIGN KEY (User_ID)
+    Post_ID int,     -- does every DM have to include a post? what if the user just wants to say hi or ask for advice, etc?
+    PRIMARY KEY (Receiver_ID, Sender_ID, Time_sent),
+    CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,
-    CONSTRAINT fk_25 FOREIGN KEY (Post_ID)
+    CONSTRAINT fk_25 FOREIGN KEY (Sender_ID)
+        REFERENCES Users(User_ID)
+        ON UPDATE cascade ON DELETE cascade,    
+    CONSTRAINT fk_26 FOREIGN KEY (Post_ID)
         REFERENCES Posts(Post_ID)
         ON UPDATE cascade ON DELETE cascade
 );

@@ -24,10 +24,10 @@ def send_direct_message():
 
     #extracting the variable
     message = the_data['Message_Text']
-    receiver = the_data['Receiver_ID']
+    receiver = the_data['Receiver_Username']
 
     # Constructing the query
-    query = 'insert into Direct_Messages (Message_Text, Receiver_ID) values ("'
+    query = 'insert into Direct_Messages (Message_Text, Receiver_Username) values ("'
     query += message + '", "'
     query += str(receiver) + '")'
 

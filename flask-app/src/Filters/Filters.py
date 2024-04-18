@@ -188,8 +188,8 @@ def delete_filter_in(Filter_ID):
     cursor = db.get_db().cursor()
     query = "DELETE FROM Keywords_In WHERE Filter_ID = %s"
     cursor.execute(query, (Filter_ID,))
-    query = "DELETE FROM Filters WHERE Filter_ID = %s"      # also deleting in filters table
-    cursor.execute(query, (Filter_ID,))       # also deleting in filters table
+    query1 = "DELETE FROM Filters WHERE Filter_ID = %s"      # also deleting in filters table
+    cursor.execute(query1, (Filter_ID,))       # also deleting in filters table
     db.get_db().commit()
     return make_response(jsonify({"message": "Filter deleted successfully"}), 200)
 

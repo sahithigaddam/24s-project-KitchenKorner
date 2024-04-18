@@ -9,7 +9,7 @@ direct_messages = Blueprint('direct_messages', __name__)
 @direct_messages.route('/direct_messages/<receiver_username>', methods=['GET'])
 def get_receiver_id(receiver_username):  
     
-    query = 'SELECT User_ID FROM Users WHERE Username = ' + str(receiver_username)
+    query = 'SELECT User_ID FROM Users WHERE Username = ' + '"' + str(receiver_username) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

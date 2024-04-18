@@ -246,14 +246,14 @@ CREATE TABLE IF NOT EXISTS Keywords_Out (
 
 
 CREATE TABLE IF NOT EXISTS Direct_Messages (
-    Receiver_Username varchar(20) UNIQUE NOT NULL,
+    Receiver_ID int NOT NULL,
     Sender_ID int NOT NULL,
     Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
     Post_ID int,     
     PRIMARY KEY (Receiver_Username, Sender_ID, Time_Sent),
-    CONSTRAINT fk_24 FOREIGN KEY (Receiver_Username)
-        REFERENCES Users(Username)
+    CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
+        REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,
     CONSTRAINT fk_25 FOREIGN KEY (Sender_ID)
         REFERENCES Users(User_ID)

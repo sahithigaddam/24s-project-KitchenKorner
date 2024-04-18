@@ -12,13 +12,13 @@ def get_direct_message(sender_id):
     query = "SELECT Message_Text FROM Direct_Messages WHERE Sender_ID = %s"
     cursor.execute(query, (sender_id,))
     message = cursor.fetchone()
-    return make_response(jsonify({"message": message}), 200)
+    return make_response(jsonify({"message": message}))
 
 @direct_messages.route('/direct_messages', methods=['POST'])
 def send_direct_message():
-    data = request.get_json()
+    data = request.form()
     cursor = db.get_db().cursor()
-    query = "INSERT INTO Direct_Messages (Receiver_ID, Sender_ID, Message_Text, User_ID) VALUES (%s, %s, %s, %s)"
-    cursor.execute(query, (data['Receiver_ID'], data['Sender_ID'], data['Message_Text'], data['User_ID']))
+    query = "INSERT INTO Direct_Messages (Receiver_ID, Sender_ID, Message_Text, Time_Sent) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (data['Receiver_ID'], data['Sender_ID'], data['Message_Text'], data['Time_Sent']))
     db.get_db().commit()
-    return make_response(jsonify({"message": "Direct message sent successfully"}), 201)
+    return make_response(jsonify({"message": "Direct message sent successfully"}))

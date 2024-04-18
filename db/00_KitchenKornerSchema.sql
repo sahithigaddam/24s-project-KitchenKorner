@@ -69,7 +69,6 @@ CREATE TABLE IF NOT EXISTS Recipes (
         ON UPDATE cascade ON DELETE cascade
 );
 
-#DROP TABLE IF EXISTS Ingredient_Details;
 
 CREATE TABLE IF NOT EXISTS Ingredient_Details (
     Recipe_ID int NOT NULL AUTO_INCREMENT,
@@ -83,7 +82,6 @@ CREATE TABLE IF NOT EXISTS Ingredient_Details (
         ON UPDATE cascade ON DELETE cascade
 );
 
-#DROP TABLE IF EXISTS Comments;
 
 CREATE TABLE IF NOT EXISTS Comments (
     Comment_Text text,
@@ -99,7 +97,6 @@ CREATE TABLE IF NOT EXISTS Comments (
         ON UPDATE cascade ON DELETE cascade
 );
 
-#DROP TABLE IF EXISTS Ratings;
 
 CREATE TABLE IF NOT EXISTS Ratings (
     Rating_ID int PRIMARY KEY AUTO_INCREMENT,
@@ -116,7 +113,6 @@ CREATE TABLE IF NOT EXISTS Ratings (
         ON UPDATE cascade ON DELETE cascade
 );
 
-#DROP TABLE IF EXISTS Follows;
 
 CREATE TABLE IF NOT EXISTS Follows (
     Followee_ID int NOT NULL,
@@ -130,7 +126,6 @@ CREATE TABLE IF NOT EXISTS Follows (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Feeds;
 
 CREATE TABLE IF NOT EXISTS Feeds (
     Following_ID int NOT NULL,
@@ -147,7 +142,6 @@ CREATE TABLE IF NOT EXISTS Feeds (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Cookbook;
 
 CREATE TABLE IF NOT EXISTS Cookbook (
     Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
@@ -163,7 +157,6 @@ CREATE TABLE IF NOT EXISTS Cookbook (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS External_Messages;
 
 CREATE TABLE IF NOT EXISTS External_Messages (
     Message_ID int PRIMARY KEY AUTO_INCREMENT,
@@ -178,7 +171,6 @@ CREATE TABLE IF NOT EXISTS External_Messages (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Tags;
 
 CREATE TABLE IF NOT EXISTS Tags (
     Post_ID int NOT NULL,
@@ -192,7 +184,6 @@ CREATE TABLE IF NOT EXISTS Tags (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Recipe_Cookbook;
 
 CREATE TABLE IF NOT EXISTS Recipe_Cookbook (
     Recipe_ID int NOT NULL,
@@ -206,7 +197,6 @@ CREATE TABLE IF NOT EXISTS Recipe_Cookbook (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Keywords_In;
 
 CREATE TABLE IF NOT EXISTS Keywords_In (
     Filter_ID int PRIMARY KEY,
@@ -225,7 +215,6 @@ CREATE TABLE IF NOT EXISTS Keywords_In (
         ON UPDATE cascade ON DELETE cascade
 );
 
---DROP TABLE IF EXISTS Keywords_Out;
 
 CREATE TABLE IF NOT EXISTS Keywords_Out (
     Filter_ID int PRIMARY KEY,
@@ -251,7 +240,7 @@ CREATE TABLE IF NOT EXISTS Direct_Messages (
     Message_Text text NOT NULL,
     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
     Post_ID int,     
-    PRIMARY KEY (Receiver_Username, Sender_ID, Time_Sent),
+    PRIMARY KEY (Receiver_ID, Sender_ID, Time_Sent),
     CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
         REFERENCES Users(User_ID)
         ON UPDATE cascade ON DELETE cascade,

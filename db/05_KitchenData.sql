@@ -1,0 +1,284 @@
+
+-- -- This file is to bootstrap a database for the CS3200 project.
+
+-- -- Create a new database.  You can change the name later.  You'll
+-- -- need this name in the FLASK API file(s),  the AppSmith
+-- -- data source creation.
+-- DROP DATABASE IF EXISTS KitchenKorner;
+
+-- CREATE DATABASE IF NOT EXISTS KitchenKorner;
+-- -- Via the Docker Compose file, a special user called webapp will
+-- -- be created in MySQL. We are going to grant that user
+-- -- all privilages to the new database we just created.
+-- -- TODO: If you changed the name of the database above, you need
+-- -- to change it here too.
+-- grant all privileges on KitchenKorner.* to 'webapp'@'%';
+-- flush privileges;
+
+-- -- Move into the database we just created.
+-- -- TODO: If you changed the name of the database above, you need to
+-- -- change it here too.
+
+
+-- USE KitchenKorner;
+
+-- CREATE TABLE IF NOT EXISTS Users (
+--     User_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Username varchar(20) UNIQUE NOT NULL,
+--     Email varchar(50) UNIQUE NOT NULL,
+--     Full_Name text NOT NULL,
+--     Created_At datetime NOT NULL DEFAULT current_timestamp
+-- );
+
+-- CREATE TABLE IF NOT EXISTS Filters (
+--     Filter_ID int PRIMARY KEY AUTO_INCREMENT
+-- );
+
+
+-- CREATE TABLE IF NOT EXISTS Posts (
+--     Post_ID int PRIMARY KEY AUTO_INCREMENT,
+--     User_ID int NOT NULL,
+--     Created_At datetime NOT NULL DEFAULT current_timestamp,
+--     Filter_ID int NOT NULL,
+--     CONSTRAINT fk_01 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_27 FOREIGN KEY (Filter_ID)
+--         REFERENCES Filters(Filter_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+
+-- CREATE TABLE IF NOT EXISTS Ingredients (
+--     Amount int,
+--     Ingredient_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Price float,
+--     Store varchar(30),
+--     Ingredient_Name varchar(20)
+-- );
+
+-- CREATE TABLE IF NOT EXISTS Recipes (
+--     Recipe_ID int PRIMARY KEY AUTO_INCREMENT,
+--     User_ID int NOT NULL,
+--     Instructions text,
+--     Recipe_Image varchar(100),
+--     Meal_Type varchar(30) NOT NULL,
+--     Recipe_Name varchar(30),
+--     Cuisine varchar(20) NOT NULL,
+--     Expected_Time float,
+--     Expected_Difficulty ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
+--     Created_At datetime NOT NULL DEFAULT current_timestamp,
+--     Filter_ID int NOT NULL,
+--     CONSTRAINT fk_01 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_27 FOREIGN KEY (Filter_ID)
+--         REFERENCES Filters(Filter_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Ingredient_Details;
+
+-- CREATE TABLE IF NOT EXISTS Ingredient_Details (
+--     Recipe_ID int NOT NULL AUTO_INCREMENT,
+--     Ingredient_ID int NOT NULL,
+--     PRIMARY KEY (Recipe_ID, Ingredient_ID),
+--     CONSTRAINT fk_03 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_04 FOREIGN KEY (Ingredient_ID)
+--         REFERENCES Ingredients(Ingredient_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Comments;
+
+-- CREATE TABLE IF NOT EXISTS Comments (
+--     Comment_Text text,
+--     User_ID int NOT NULL,
+--     Created_At datetime NOT NULL DEFAULT current_timestamp,
+--     Comment_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Recipe_ID int NOT NULL,
+--     CONSTRAINT fk_05 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_06 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Ratings;
+
+-- CREATE TABLE IF NOT EXISTS Ratings (
+--     Rating_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Actual_Difficulty ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
+--     Actual_Time float,
+--     Taste ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
+--     Recipe_ID int NOT NULL,
+--     User_ID int NOT NULL,
+--     CONSTRAINT fk_07 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_08 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Follows;
+
+-- CREATE TABLE IF NOT EXISTS Follows (
+--     Followee_ID int NOT NULL,
+--     Follower_ID int NOT NULL,
+--     PRIMARY KEY (Followee_ID, Follower_ID),
+--     CONSTRAINT fk_09 FOREIGN KEY (Followee_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_10 FOREIGN KEY (Follower_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Feeds;
+
+-- CREATE TABLE IF NOT EXISTS Feeds (
+--     Following_ID int NOT NULL,
+--     Recipe_ID int NOT NULL,
+--     User_ID int PRIMARY KEY,
+--     CONSTRAINT fk_32 FOREIGN KEY (Following_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_33 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_34 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Cookbook;
+
+-- CREATE TABLE IF NOT EXISTS Cookbook (
+--     Cookbook_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Recipe_ID int NOT NULL,
+--     User_ID int NOT NULL,
+--     Cookbook_Name varchar(100),
+--     Created_At datetime,
+--     CONSTRAINT fk_11 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_12 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS External_Messages;
+
+-- CREATE TABLE IF NOT EXISTS External_Messages (
+--     Message_ID int PRIMARY KEY AUTO_INCREMENT,
+--     Message_Text text,
+--     Recipe_ID int NOT NULL,
+--     User_ID int NOT NULL,
+--     CONSTRAINT fk_13 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_14 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Tags;
+
+-- CREATE TABLE IF NOT EXISTS Tags (
+--     Recipe_ID int NOT NULL,
+--     User_ID int,
+--     PRIMARY KEY (Recipe_ID, User_ID),
+--     CONSTRAINT fk_15 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_35 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Recipe_Cookbook;
+
+-- CREATE TABLE IF NOT EXISTS Recipe_Cookbook (
+--     Recipe_ID int NOT NULL,
+--     Cookbook_ID int NOT NULL,
+--     PRIMARY KEY (Recipe_ID, Cookbook_ID),
+--     CONSTRAINT fk_18 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_19 FOREIGN KEY (Cookbook_ID)
+--         REFERENCES Cookbook(Cookbook_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Keywords_In;
+
+-- CREATE TABLE IF NOT EXISTS Keywords_In (
+--     Filter_ID int PRIMARY KEY,
+--     Keyword_One tinytext,
+--     Keyword_Two tinytext,
+--     Keyword_Three tinytext,
+--     Keyword_Four tinytext,
+--     Keyword_Five tinytext,
+--     Keyword_Six tinytext,
+--     Keyword_Seven tinytext,
+--     Keyword_Eight tinytext,
+--     Keyword_Nine tinytext,
+--     Keyword_Ten tinytext,
+--     CONSTRAINT fk_28 FOREIGN KEY (Filter_ID)
+--         REFERENCES Filters(Filter_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- --DROP TABLE IF EXISTS Keywords_Out;
+
+-- CREATE TABLE IF NOT EXISTS Keywords_Out (
+--     Filter_ID int PRIMARY KEY,
+--     Keyword_One tinytext,
+--     Keyword_Two tinytext,
+--     Keyword_Three tinytext,
+--     Keyword_Four tinytext,
+--     Keyword_Five tinytext,
+--     Keyword_Six tinytext,
+--     Keyword_Seven tinytext,
+--     Keyword_Eight tinytext,
+--     Keyword_Nine tinytext,
+--     Keyword_Ten tinytext,
+--     CONSTRAINT fk_29 FOREIGN KEY (Filter_ID)
+--         REFERENCES Filters(Filter_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+
+-- CREATE TABLE IF NOT EXISTS Direct_Messages (
+--     Receiver_ID int NOT NULL,
+--     Sender_ID int NOT NULL,
+--     Message_Text text NOT NULL,
+--     Time_Sent datetime NOT NULL DEFAULT current_timestamp,
+--     Recipe_ID int,     
+--     PRIMARY KEY (Receiver_ID, Sender_ID, Time_Sent),
+--     CONSTRAINT fk_24 FOREIGN KEY (Receiver_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_25 FOREIGN KEY (Sender_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_26 FOREIGN KEY (Recipe_ID)
+--         REFERENCES Recipes(Recipe_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );
+
+-- CREATE TABLE IF NOT EXISTS Search (
+--     Username VARCHAR(20) NOT NULL,
+--     User_ID int NOT NULL,
+--     PRIMARY KEY (Username, User_ID),
+--     CONSTRAINT fk_30 FOREIGN KEY (Username)
+--         REFERENCES Users(Username)
+--         ON UPDATE cascade ON DELETE cascade,
+--     CONSTRAINT fk_31 FOREIGN KEY (User_ID)
+--         REFERENCES Users(User_ID)
+--         ON UPDATE cascade ON DELETE cascade
+-- );

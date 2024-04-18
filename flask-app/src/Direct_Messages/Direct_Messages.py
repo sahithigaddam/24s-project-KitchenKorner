@@ -29,7 +29,7 @@ def send_direct_message():
     # Constructing the query
     query = 'insert into Direct_Messages (Message_Text, Receiver_ID) values ("'
     query += message + '", "'
-    query += receiver + ')'
+    query += str(receiver) + '")'
 
     current_app.logger.info(query)
 

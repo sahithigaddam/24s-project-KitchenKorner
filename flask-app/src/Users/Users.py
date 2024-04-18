@@ -1,6 +1,6 @@
 # Users 
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -13,8 +13,8 @@ def get_users():
     cursor.execute('select User_ID, Username, Email, Full_Name, Created_At from Users')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
+    the_data = cursor.fetchall()
+    for row in the_data:
         json_data.append(dict(zip(row_headers, row)))
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
@@ -23,13 +23,30 @@ def get_users():
 
 # Add a new user who joins the platform
 @users.route('/users', methods=['POST'])
-def add_user():
-    data = request.get_json()
+def add_new_user():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    username = the_data['Username']
+    email = the_data['Email']
+    full_name = the_data['Full_Name']
+
+    # Constructing the query
+    query = 'insert into Users (Username, Email, Full_Name) values ("'
+    query += username + '", "'
+    query += email + '", "'
+    query += full_name + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
     cursor = db.get_db().cursor()
-    query = "INSERT INTO Users (User_ID, Username, Email, Full_Name, Created_At) VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(query, (data['User_ID'], data['Username'], data['Email'], data['Full_Name'], data['Created_At']))
+    cursor.execute(query)
     db.get_db().commit()
-    return make_response(jsonify({"message": "User added successfully"}), 201)
+    
+    return 'Success!'
 
 # Delete a user from the paltform
 @users.route('/users', methods=['DELETE'])

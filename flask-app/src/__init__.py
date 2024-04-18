@@ -39,6 +39,7 @@ def create_app():
     from src.Cookbook.Cookbook import cookbook
     from src.Direct_Messages.Direct_Messages import direct_messages
     from src.External_Messages.External_Messages import external_messages
+    from src.Feeds.Feeds import feeds
     from src.Filters.Filters import filters
     from src.Follows.Follows import follows
     from src.Ingredient_Details.Ingredient_Details import ingredient_details
@@ -60,6 +61,7 @@ def create_app():
     app.register_blueprint(cookbook,    url_prefix='/c')
     app.register_blueprint(direct_messages,    url_prefix='/d')
     app.register_blueprint(external_messages,    url_prefix='/e')
+    app.register_blueprint(feeds,    url_prefix='/f')
     app.register_blueprint(filters,    url_prefix='/f')
     app.register_blueprint(follows,    url_prefix='/f')
     app.register_blueprint(ingredient_details,    url_prefix='/i')

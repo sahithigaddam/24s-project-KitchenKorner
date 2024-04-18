@@ -21,6 +21,7 @@ def get_recipes():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Fix so that Posts_ID is inputted Recipe_ID
 # Get recipe details
 @recipes.route('/recipes/<Recipe_ID>', methods=['GET'])
 def get_recipe(Recipe_ID):

@@ -62,6 +62,7 @@ def follow_user():
 #     db.get_db().commit()
 #     return make_response(jsonify({"message": "Successfully unfollowed user"}), 200)
 
+# Unfollow a user
 @follows.route('/unfollows/<followee_id>', methods=['DELETE'])
 def remove_follower(followee_id):
     # Query to get the follower ID

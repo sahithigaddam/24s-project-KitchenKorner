@@ -6,28 +6,28 @@ from src import db
 
 users = Blueprint('users', __name__)
 # Get direct messages for a specific user
-@users.route('/users/<id>', methods=['GET'])
-def get_user_recipes(id):  
+# @users.route('/users/<id>', methods=['GET'])
+# def get_user_recipes(id):  
     
-    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
-    current_app.logger.info(user_query)
+#     user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+#     current_app.logger.info(user_query)
 
-    cursor = db.get_db().cursor()
-    cursor.execute(user_query)
-    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
-    id = user_result[0]  # Extract the user ID from the result
+#     cursor = db.get_db().cursor()
+#     cursor.execute(user_query)
+#     user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+#     id = user_result[0]  # Extract the user ID from the result
 
-    query = 'SELECT User_ID FROM Users WHERE User_ID = ' + str(id)
-    current_app.logger.info(query)
+#     query = 'SELECT User_ID FROM Users WHERE User_ID = ' + str(id)
+#     current_app.logger.info(query)
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    column_headers = [x[0] for x in cursor.description]
-    json_data = []
-    the_data = cursor.fetchall()
-    for row in the_data:
-        json_data.append(dict(zip(column_headers, row)))
-    return jsonify(json_data)
+#     cursor = db.get_db().cursor()
+#     cursor.execute(query)
+#     column_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     the_data = cursor.fetchall()
+#     for row in the_data:
+#         json_data.append(dict(zip(column_headers, row)))
+#     return jsonify(json_data)
 
 # Return a list of all usernames for search
 @users.route('/users', methods=['GET'])

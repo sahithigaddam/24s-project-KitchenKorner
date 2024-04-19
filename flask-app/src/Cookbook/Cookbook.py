@@ -14,7 +14,7 @@ cookbook = Blueprint('cookbook', __name__)
 @cookbook.route('/cookbook', methods=['GET'])
 def get_cookbook():
     cursor = db.get_db().cursor()
-    cursor.execute('select Cookbook_ID, Recipe_ID, User_ID, Modified_Datetime from Cookbook')
+    cursor.execute('select Cookbook_ID, Recipe_ID, User_ID, Created_At from Cookbook')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()

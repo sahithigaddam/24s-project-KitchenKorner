@@ -24,7 +24,6 @@ Our app allows food lovers to share their recipes to others. You can follow your
 
 This repository contains the KitchenKorner app, designed to be a social media app dedicated to sharing recipes online. This database stores data on recipes, ingredients, users, etc.; a backend flask application; and a local Appsmith server for the frontend usage of the flask APIs.
 
-
 ## Overview 
 The purpose of KitchenKorner is to provide a platform specifically for those interested in sharing and finding new recipes. This app is designed to be usable for all levels of users, whether you're a professional chef or just a college student cooking for the first time, KitchenKorner is meant for all. Whether you want to share your recipes with others or find new favorites to save forever, KitchenKorner is the place to do it.
 
@@ -33,12 +32,7 @@ MySQL Database: Stores and manages all KitchenKorner data, including; users, rec
 Flask REST API: Enabling data operations via HTTP requests, acts as the fundamental framework for facilitating interactions between our frontend and AppSmith.
 AppSmith Server: The application of the HTTP request on a visual interface, representative of how the app would look like for the user.
 
-
-## Getting Started
-Stuff already in README.md
-
-
-System Architecture
+## System Architecture
 The MySQL database is built from 15 tables
 Users: Contains user information, such as; User_ID, Username, Email, Full_Name, and Created_At.
 Follows: Stores who a user follows.

@@ -45,14 +45,10 @@ def send_direct_message():
 
     # extracting the variable
     message = the_data['Message_Text']
-    receiver = the_data['Receiver_Username']
+    receiver = the_data['Receiver_ID']
 
     # Constructing the query
-    query = """
-    INSERT INTO Direct_Messages (Message_Text, Receiver_ID)
-    SELECT Receiver_ID
-    FROM Users
-    """
+    query = 'INSERT INTO Direct_Messages (Message_Text, Receiver_ID) VALUES ("'
     query += message + '", "'
     query += str(receiver) + '")'
 

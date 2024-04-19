@@ -21,46 +21,26 @@ def get_followers(followee_id):
     the_response.mimetype = 'application/json'
     return the_response
 
-@follows.route('/follows', methods=['POST'])
-def follow_user():
+@follows.route('/follows/followee_id', methods=['POST'])
+def follow_user(followee_id):
+    # Query to get the follower ID
+    follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(follower_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(follower_query)
+    follower_result = cursor.fetchone() # Fetch one row since we're expecting only one result
+    id = follower_result[0] # Extract the follower ID from the result
+    
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
-    followee = the_data['Followee_ID']
-    follower = the_data["Follower_ID"]
+    query = 'insert into follows (Followee_ID, Follower_ID) values (%s, %s)"'
 
-    # Constructing the query
-    query = 'insert into follows (Followee_ID, Follower_ID) values ("'
-    query += followee + '")'
-    query += follower + '")'
-    current_app.logger.info(query)
-
-    # executing and committing the insert statement 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, (followee_id, id))
     db.get_db().commit()
-    
+      
     return 'Success!'
-
-# # Unfollow a user
-# @follows.route('/unfollows/<followee_id>', methods=['DELETE'])
-# def remove_follower(followee_id):
-#     # Query to get the follower ID
-#     follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
-#     current_app.logger.info(follower_query)
-
-#     cursor = db.get_db().cursor()
-#     cursor.execute(follower_query)
-#     follower_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
-#     id = follower_result[0]  # Extract the follower ID from the result
-
-#     data = request.get_json()
-#     cursor = db.get_db().cursor()
-#     query = "DELETE FROM Follows WHERE Followee_ID = %s AND Follower_ID = %s"
-#     cursor.execute(query, (data['Followee_ID'], followee_id))
-#     db.get_db().commit()
-#     return make_response(jsonify({"message": "Successfully unfollowed user"}), 200)
 
 # Unfollow a user
 @follows.route('/unfollows/<followee_id>', methods=['DELETE'])

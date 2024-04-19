@@ -1,4 +1,4 @@
-CS3200 Database Design Final Project
+## CS3200 Database Design Final Project
 Amelia Willmann, Sahithi Gaddam, Nicole Li, Catherina Haast
 
 This repo contains a boilerplate setup for spinning up 3 Docker containers: 
@@ -19,13 +19,10 @@ This repo contains a boilerplate setup for spinning up 3 Docker containers:
 Welcome to our final project of the semester! Our goal was to create a social media app to share recipes within the Foodie community. 
 
 # KitchenKorner
-
-Our app allows food lovers to share their recipes to others. You can follow your favorite influencers, fitness gurus, friends, and family. You can save your favorite recipes to an unlimited amount of cookbooks
-
 This repository contains the KitchenKorner app, designed to be a social media app dedicated to sharing recipes online. This database stores data on recipes, ingredients, users, etc.; a backend flask application; and a local Appsmith server for the frontend usage of the flask APIs.
 
 ## Overview 
-The purpose of KitchenKorner is to provide a platform specifically for those interested in sharing and finding new recipes. This app is designed to be usable for all levels of users, whether you're a professional chef or just a college student cooking for the first time, KitchenKorner is meant for all. Whether you want to share your recipes with others or find new favorites to save forever, KitchenKorner is the place to do it.
+The purpose of KitchenKorner is to provide a platform specifically for those interested in sharing and finding new recipes. This app is designed to be usable for all levels of users, whether you're a professional chef or just a college student cooking for the first time, KitchenKorner is meant for all. Whether you want to share your recipes with others or find new favorites to save forever, KitchenKorner is the place to do it. Our app allows food lovers to share their recipes to others. You can follow your favorite influencers, fitness gurus, friends, and family and stay up to date with all the hot food trends.
 
 ## System Components
 MySQL Database: Stores and manages all KitchenKorner data, including; users, recipes, ingredients, cookbooks, comments, ratings, feed, etc.<br>

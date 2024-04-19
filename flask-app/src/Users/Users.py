@@ -147,8 +147,8 @@ def update_user(user_id):
     db.get_db().commit()
     return 'User updated!'
 
-# Delete a user from the paltform
-@users.route('/users', methods=['DELETE'])
+# Delete a user from the platform
+@users.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     cursor = db.get_db().cursor()
     query = "DELETE FROM Users WHERE User_ID = %s"

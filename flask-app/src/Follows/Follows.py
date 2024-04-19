@@ -44,13 +44,8 @@ def follow_user():
     return 'Success!'
 
 # Unfollow a user
-<<<<<<< Updated upstream
-@follows.route('/follows/<id>', methods=['DELETE'])
+@follows.route('/unfollows/<id>', methods=['DELETE'])
 def remove_follower(id):
-=======
-@follows.route('/unfollows', methods=['DELETE'])
-def unfollow_user():
->>>>>>> Stashed changes
     # Query to get the follower ID
     follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
     current_app.logger.info(follower_query)
@@ -62,12 +57,7 @@ def unfollow_user():
 
     data = request.get_json()
     cursor = db.get_db().cursor()
-<<<<<<< Updated upstream
     query = "DELETE FROM Follows WHERE Followee_ID = %s AND Follower_ID = %s"
     cursor.execute(query, (data['Followee_ID'], id))
-=======
-    query = "DELETE FROM Follows WHERE Followee_ID = %s AND Follower_ID = %s" 
-    cursor.execute(query, (data['Followee_ID'], follower_id))
->>>>>>> Stashed changes
     db.get_db().commit()
     return make_response(jsonify({"message": "Successfully unfollowed user"}), 200)

@@ -8,9 +8,8 @@ ratings = Blueprint('ratings', __name__)
 @ratings.route('/diff_rating', methods=['POST'])
 def add_new_difficulty_rating():
     the_data = request.json
-#     # collecting data from the request object 
-#     the_data = request.json
-#     current_app.logger.info(the_data)
+     # collecting data from the request object 
+     current_app.logger.info(the_data)
 
     #extracting the variable
     rating_id = the_data['Rating_ID']
@@ -30,10 +29,10 @@ def add_new_difficulty_rating():
     query += user_id + ')'
     current_app.logger.info(query)
 
-#     # executing and committing the insert statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query)
-#     db.get_db().commit()
+     # executing and committing the insert statement 
+     cursor = db.get_db().cursor()
+     cursor.execute(query)
+     db.get_db().commit()
     
     return 'Successfully added difficulty rating!'
 

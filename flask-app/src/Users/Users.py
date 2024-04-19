@@ -7,7 +7,7 @@ from src import db
 users = Blueprint('users', __name__)
 # Get direct messages for a specific user
 @users.route('/users/<id>', methods=['GET'])
-def get_receiver_id(id):  
+def get_user_recipes(id):  
     
     user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
     current_app.logger.info(user_query)
@@ -117,6 +117,30 @@ def get_user(user_id):
     for row in the_data:
         json_data.append(dict(zip(column_headers, row)))
     return jsonify(json_data)
+
+# Get user's info
+@users.route('/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    
+    user_info = request.json
+    username = user_info['Username']
+    full_name = user_info['Full_Name']
+    email = user_info['Email']
+
+    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(user_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(user_query)
+    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    user_id = user_result[0]  # Extract the user ID from the result
+
+    query = "UPDATE Users SET Username = %s, Full_Name = %s, Email = %s where User_ID = %s"
+    data = (username, full_name, email, user_id)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'User updated!'
 
 # Delete a user from the paltform
 @users.route('/users', methods=['DELETE'])

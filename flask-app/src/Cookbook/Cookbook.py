@@ -21,7 +21,7 @@ def get_cookbook():
     return the_response
 
 # Get cookbook name
-@cookbook.route('/cookbook/<Cookbook_ID>', methods=['GET'])
+@cookbook.route('/cname/<Cookbook_ID>', methods=['GET'])
 def get_cookbook_name(Cookbook_ID):
     cursor = db.get_db().cursor()
     cursor.execute('select Cookbook_Name from Cookbook where Cookbook_ID = {0}'.format(Cookbook_ID))
@@ -36,7 +36,7 @@ def get_cookbook_name(Cookbook_ID):
     return the_response
 
 # Get particular cookbook 
-@cookbook.route('/cookbook/<Cookbook_ID>', methods=['GET'])
+@cookbook.route('/cookbookrec/<Cookbook_ID>', methods=['GET'])
 def get_cookbook_details(Cookbook_ID):
     query = 'SELECT Recipe_Name, Recipe_Image, Meal_Type, Cuisine, Expected_Time, Expected_Difficulty\
         FROM Cookbook JOIN Recipe_Cookbook ON Cookbook_ID = Recipe_Cookbook.Cookbook_ID\

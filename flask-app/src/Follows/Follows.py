@@ -28,10 +28,12 @@ def add_follower():
 
     #extracting the variable
     followee = the_data['Followee_ID']
+    follower = the_data["Follower_ID"]
 
     # Constructing the query
-    query = 'insert into products (Followee_ID) values ("'
+    query = 'insert into follows (Followee_ID, Follower_ID) values ("'
     query += followee + '")'
+    query += follower + '")'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -42,7 +44,7 @@ def add_follower():
     return 'Success!'
 
 # Unfollow a user
-@follows.route('/follows', methods=['DELETE'])
+@follows.route('/unfollows', methods=['DELETE'])
 def remove_follower():
     # Query to get the follower ID
     follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"

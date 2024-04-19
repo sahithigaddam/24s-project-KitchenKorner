@@ -9,8 +9,8 @@ ratings = Blueprint('ratings', __name__)
 def add_new_difficulty_rating():
     the_data = request.json
      # collecting data from the request object 
-     current_app.logger.info(the_data)
-
+    current_app.logger.info(the_data)
+    
     #extracting the variable
     rating_id = the_data['Rating_ID']
     actual_difficulty = the_data['Actual_Difficulty']
@@ -30,9 +30,9 @@ def add_new_difficulty_rating():
     current_app.logger.info(query)
 
      # executing and committing the insert statement 
-     cursor = db.get_db().cursor()
-     cursor.execute(query)
-     db.get_db().commit()
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
     
     return 'Successfully added difficulty rating!'
 

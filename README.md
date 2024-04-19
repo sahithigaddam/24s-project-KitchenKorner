@@ -30,7 +30,7 @@ Flask REST API: Enabling data operations via HTTP requests, acts as the fundamen
 AppSmith Server: The application of the HTTP request on a visual interface, representative of how the app would look like for the user.
 
 ## System Architecture
-The MySQL database is built from 15 tables<br>
+The MySQL database is built from 18 tables<br>
 Users: Contains user information, such as; User_ID, Username, Email, Full_Name, and Created_At.<br>
 Follows: Stores who a user follows.<br>
 Posts: Stores posts made by users.<br>

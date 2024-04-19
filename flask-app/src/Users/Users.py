@@ -102,22 +102,26 @@ def add_new_user():
 @users.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     
-    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
-    current_app.logger.info(user_query)
+    # user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    # current_app.logger.info(user_query)
 
+    # cursor = db.get_db().cursor()
+    # cursor.execute(user_query)
+    # user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    # user_id = user_result[0]  # Extract the user ID from the result
     cursor = db.get_db().cursor()
-    cursor.execute(user_query)
-    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
-    user_id = user_result[0]  # Extract the user ID from the result
+    cursor.execute('select * from Users where User_ID = {0}'.format(user_id))
 
-    query = "SELECT * FROM Users WHERE User_ID = " + str(user_id)
-    current_app.logger.info(query)
-    column_headers = [x[0] for x in cursor.description]
+    # query = "SELECT * FROM Users WHERE User_ID = " + str(user_id)
+    row_headers = [x[0] for x in cursor.description]
     json_data = []
-    the_data = cursor.fetchall()
-    for row in the_data:
-        json_data.append(dict(zip(column_headers, row)))
-    return jsonify(json_data)
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # Get user's info
 @users.route('/users/<user_id>', methods=['PUT'])

@@ -38,17 +38,19 @@ def get_cookbook_name(Cookbook_ID):
 # Get particular cookbook 
 @cookbook.route('/cookbook/<Cookbook_ID>', methods=['GET'])
 def get_cookbook_details(Cookbook_ID):
+    query = 'SELECT Recipe_Name, Recipe_Image, Meal_Type, Cuisine, Expected_Time, Expected_Difficulty\
+        FROM Cookbook JOIN Recipe_Cookbook ON Cookbook_ID = Recipe_Cookbook.Cookbook_ID\
+        JOIN Recipes ON Recipe_Cookbook.Recipe_ID = Recipe_ID WHERE Cookbook.Cookbook_ID' + str(Cookbook_ID)
+    current_app.logger.info(query)
+
     cursor = db.get_db().cursor()
-    cursor.execute('select * from Cookbook where Cookbook_ID = {0}'.format(Cookbook_ID))
-    row_headers = [x[0] for x in cursor.description]
+    cursor.execute(query)
+    column_headers = [x[0] for x in cursor.description]
     json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 # Add new cookbook
 @cookbook.route('/cookbook', methods=['POST'])

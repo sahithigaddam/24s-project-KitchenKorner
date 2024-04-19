@@ -45,6 +45,7 @@ def get_keywords_out():
     return jsonify(json_data)
 
 
+
 # Add a new inclusive filter 
 @filters.route('/filters', methods=['POST'])
 def add_new_filter_in():

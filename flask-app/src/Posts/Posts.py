@@ -41,3 +41,4 @@ def archive_post(post_id):
     cursor.execute('UPDATE Posts SET archived = true WHERE Post_ID = %s', (Post_ID,))
     db.get_db().commit()
     return make_response(jsonify({"message": "Post archived successfully"}), 200)
+ 

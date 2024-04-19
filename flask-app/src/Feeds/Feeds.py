@@ -6,14 +6,16 @@ from src import db
 
 feeds = Blueprint('feeds', __name__)
 
-@feeds.route('/feeds/<user_id>', methods=['GET'])
-def get_feed(user_id):
+
+# Get the user's feed
+@feeds.route('/feeds/<followee_id>', methods=['GET'])
+def get_feed(followee_id):
 
     # Username, Recipe_Name, image, meal type, cuisine, expected time, expected difficulty
     # SELECT Followee_ID from Follows JOIN Feeds ON Feeds.User_ID = Follows.Follower_ID;
     # SELECT Post_ID from Posts JOIN [above query] ON Posts.User_ID = Follows.Followee_ID;
     # SELECT Username, Recipe_Name, Recipe_Image, Meal_Type, Cuisine, Expected_Time, Expected_Difficulty FROM Users JOIN Feeds ON Feeds.User_ID = Users.User_ID JOIN Follows ON Feeds.User_ID = Follows.Follower_ID JOIN Posts ON Posts.User_ID = Follows.Followee_ID JOIN Recipes ON Recipes/Post_ID = Posts.Post_ID;
-    query = 'SELECT Username, Recipe_Name, Recipe_Image, Meal_Type,\
+    query = 'SELECT Posts.Post_ID, Username, Recipe_Name, Recipe_Image, Meal_Type,\
         Cuisine, Expected_Time, Expected_Difficulty FROM Users JOIN Feeds ON Feeds.User_ID = Users.User_ID\
         JOIN Follows ON Feeds.User_ID = Follows.Follower_ID\
         JOIN Posts ON Posts.User_ID = Follows.Followee_ID JOIN Recipes ON Recipes.Post_ID = Posts.Post_ID WHERE Feeds.User_ID = ' + str(user_id)

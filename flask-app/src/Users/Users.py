@@ -5,6 +5,32 @@ import json
 from src import db
 
 users = Blueprint('users', __name__)
+# Get direct messages for a specific user
+@users.route('/users/<id>', methods=['GET'])
+def get_receiver_id(id):  
+    
+    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(user_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(user_query)
+    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    id = user_result[0]  # Extract the user ID from the result
+
+    query = 'SELECT Username, Recipe_Name, Recipe_Image, Meal_Type,\
+        Cuisine, Expected_Time, Expected_Difficulty FROM Users JOIN Feeds ON Feeds.User_ID = Users.User_ID\
+        JOIN Follows ON Feeds.User_ID = Follows.Follower_ID\
+        JOIN Posts ON Posts.User_ID = Follows.Followee_ID JOIN Recipes ON Recipes.Post_ID = Posts.Post_ID WHERE Feeds.User_ID = ' + str(id)
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    column_headers = [x[0] for x in cursor.description]
+    json_data = []
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 # Return a list of all usernames for search
 @users.route('/users', methods=['GET'])
@@ -47,6 +73,29 @@ def add_new_user():
     db.get_db().commit()
     
     return 'Success!'
+
+# Get the user's own posts
+@users.route('/users/<user_id>', methods=['GET'])
+def get_user_posts(user_id):
+
+    # Username, Recipe_Name, image, meal type, cuisine, expected time, expected difficulty
+    # SELECT Followee_ID from Follows JOIN Feeds ON Feeds.User_ID = Follows.Follower_ID;
+    # SELECT Post_ID from Posts JOIN [above query] ON Posts.User_ID = Follows.Followee_ID;
+    # SELECT Username, Recipe_Name, Recipe_Image, Meal_Type, Cuisine, Expected_Time, Expected_Difficulty FROM Users JOIN Feeds ON Feeds.User_ID = Users.User_ID JOIN Follows ON Feeds.User_ID = Follows.Follower_ID JOIN Posts ON Posts.User_ID = Follows.Followee_ID JOIN Recipes ON Recipes/Post_ID = Posts.Post_ID;
+    query = 'SELECT Posts.Post_ID, Username, Recipe_Name, Recipe_Image, Meal_Type,\
+        Cuisine, Expected_Time, Expected_Difficulty FROM Users JOIN Feeds ON Feeds.User_ID = Users.User_ID\
+        JOIN Follows ON Feeds.User_ID = Follows.Follower_ID\
+        JOIN Posts ON Posts.User_ID = Follows.Followee_ID JOIN Recipes ON Recipes.Post_ID = Posts.Post_ID WHERE Feeds.User_ID = ' + str(user_id)
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    column_headers = [x[0] for x in cursor.description]
+    json_data = []
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 # Delete a user from the paltform
 @users.route('/users', methods=['DELETE'])

@@ -4,7 +4,7 @@ from src import db
 
 posts = Blueprint('posts', __name__)
 
-# Get customer detail for customer with particular userID
+# Get posts of a user
 @posts.route('/posts/<User_ID>', methods=['GET'])
 def get_customer(User_ID):
     cursor = db.get_db().cursor()

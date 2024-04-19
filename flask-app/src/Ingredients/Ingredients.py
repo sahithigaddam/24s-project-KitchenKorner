@@ -5,7 +5,7 @@ from src import db
 
 ingredients = Blueprint('ingredients', __name__)
 
-# Get all customers from the DB
+# Get all ingredients from the DB
 @ingredients.route('/ingredients', methods=['GET'])
 def get_ingredients():
     cursor = db.get_db().cursor()
@@ -21,7 +21,7 @@ def get_ingredients():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get all customers from the DB
+# Get all ingredient names from the DB
 @ingredients.route('/ingredient_names', methods=['GET'])
 def get_ingredient_names():
     cursor = db.get_db().cursor()
@@ -37,7 +37,7 @@ def get_ingredient_names():
     return the_response
 
 
-# Get customer detail for customer with particular userID
+# Get ingredient details
 @ingredients.route('/ingredients/<Ingredient_ID>', methods=['GET'])
 def get_ingredient(Ingredient_ID):
     cursor = db.get_db().cursor()
@@ -52,6 +52,7 @@ def get_ingredient(Ingredient_ID):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Add an ingredient
 @ingredients.route('/ingredients', methods=['POST'])
 def add_new_ingredient():
     
@@ -80,6 +81,7 @@ def add_new_ingredient():
     
     return 'Success!'
 
+# Update an ingredient
 @ingredients.route('/ingredients/<Ingredient_ID>', methods=['PUT'])
 def update_ingredient_price(Ingredient_ID):
     ingredient_info = request.json

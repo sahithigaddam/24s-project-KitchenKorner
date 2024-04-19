@@ -45,8 +45,6 @@ def get_keywords_out():
     return jsonify(json_data)
 
 
-## is post and put different for filters?
-
 # Add a new inclusive filter 
 @filters.route('/filters', methods=['POST'])
 def add_new_filter_in():
@@ -155,8 +153,6 @@ def update_keywords_in():
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'Filter updated!'
-
-
 
 # Update an existing exclusive filter
 @filters.route('/filters', methods=['PUT'])

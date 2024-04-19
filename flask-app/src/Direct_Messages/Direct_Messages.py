@@ -7,10 +7,11 @@ from src import db
 direct_messages = Blueprint('direct_messages', __name__)
 
 # Get direct messages for a specific user
-@direct_messages.route('/direct_messages/<receiver_username>', methods=['GET'])
-def get_receiver_id(receiver_username):  
+@direct_messages.route('/direct_messages/<receiver_id>', methods=['GET'])
+def get_receiver_id(receiver_id):  
     
-    query = 'SELECT User_ID FROM Users WHERE Username = ' + '"' + str(receiver_username) + '"'
+    query = 'SELECT Message_Text, Time_Sent FROM Direct_Messages JOIN Users\
+        ON User.User_ID = Direct_Messages.Receiver_ID WHERE Receiver_ID = ' + str(receiver_id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

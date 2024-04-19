@@ -4,14 +4,21 @@ from src import db
 
 ratings = Blueprint('ratings', __name__)
 
+<<<<<<< Updated upstream
 # # Add a new exclusive filter
 # @ratings.route('/filters', methods=['POST'])
 # def add_new_filter_out():
+=======
+# Add a new rating to a post
+@ratings.route('/diff_rating', methods=['POST'])
+def add_new_difficulty_rating():
+>>>>>>> Stashed changes
     
 #     # collecting data from the request object 
 #     the_data = request.json
 #     current_app.logger.info(the_data)
 
+<<<<<<< Updated upstream
 #     #extracting the variable
 #     filter_id = the_data['Filter_ID']
 #     keyword_one = the_data['Keyword_One']
@@ -39,13 +46,72 @@ ratings = Blueprint('ratings', __name__)
 #     query += keyword_nine + '", "'
 #     query += keyword_ten + ')'
 #     current_app.logger.info(query)
+=======
+    #extracting the variable
+    rating_id = the_data['Rating_ID']
+    actual_difficulty = the_data['Actual_Difficulty']
+    actual_time = the_data['Actual_Time']
+    taste = the_data['Taste']
+    post_id = the_data['Post_ID']
+    user_id = the_data['User_ID']
+
+    # creating the query 
+    query = 'insert into Ratings (Rating_ID, Actual_Difficulty, Actual_Time, Taste, Post_ID, User_ID) values ("'
+    query += str(rating_id) + '", "'
+    query += actual_difficulty + '", "'
+    query += actual_time + '", "'
+    query += taste + '", "'
+    query += post_id + '", "'
+    query += user_id + ')'
+    current_app.logger.info(query)
+>>>>>>> Stashed changes
 
 #     # executing and committing the insert statement 
 #     cursor = db.get_db().cursor()
 #     cursor.execute(query)
 #     db.get_db().commit()
     
+<<<<<<< Updated upstream
 #     return 'Successfully added filter!'
+=======
+    return 'Successfully added difficulty rating!'
+
+
+
+
+@ratings.route('/overall_rating', methods=['GET'])
+def calculate_overall_rating():
+    post_id = request.args.get('Post_ID')
+
+    # Calculate the overall difficulty rating from the database
+    query = "SELECT AVG(Actual_Difficulty) AS overall_rating FROM Ratings WHERE Post_ID = " + str(post_id)
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    overall_rating = cursor.fetchone()['overall_rating']
+
+    return jsonify({'overall_rating': overall_rating})
+
+
+
+
+
+# not correct
+
+@ratings.route('/o_diff_rating', methods=['PUT'])
+def update_overall_diff_rating():
+    filter_info = request.json
+    post_id = filter_info['Post_ID']
+    overall_difficulty_query = 'SELECT AVG(Actual_Difficulty) AS overall_difficulty \
+                                FROM Ratings WHERE Post_ID = {post_id}'
+    cursor = db.get_db().cursor
+    cursor.execute(overall_difficulty_query)
+    overall_difficulty = cursor.fetchone()['overall_difficulty']
+    db.get_db().commit()
+    return jsonify({'message': 'Successfully added difficulty rating!', 'overall_difficulty': overall_difficulty})
+
+
+
+>>>>>>> Stashed changes
 
 
 # # Returns all ratings under a post
@@ -145,7 +211,38 @@ ratings = Blueprint('ratings', __name__)
 #     user_id = ratings_info['User_ID']
 #     actual_difficulty = ratings_info['Actual_Difficulty']
 
+<<<<<<< Updated upstream
 #     cursor = db.get_db().cursor()
 #     cursor.execute('UPDATE Ratings SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Actual_Difficulty = %s', (New_Rating_Value, Post_ID, Actual_Difficulty))
 #     db.get_db().commit()
 #     return 'difficulty rating updated!'
+=======
+
+
+# Returns all ratings under a post
+@ratings.route('/ratings/<post_id>', methods=['GET'])
+def get_ratings(post_id):
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT * FROM Ratings WHERE Post_ID = %s', (Post_ID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

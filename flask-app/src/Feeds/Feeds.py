@@ -8,8 +8,8 @@ feeds = Blueprint('feeds', __name__)
 
 
 # Get the user's feed
-@feeds.route('/feeds/<followee_id>', methods=['GET'])
-def get_feed(followee_id):
+@feeds.route('/feeds', methods=['GET'])
+def get_feed():
 
     user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
     current_app.logger.info(user_query)

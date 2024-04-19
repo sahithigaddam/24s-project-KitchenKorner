@@ -67,8 +67,6 @@ def update_overall_diff_rating():
 
 
 
-<<<<<<< Updated upstream
-=======
 # Returns all ratings under a post
 @ratings.route('/ratings/<post_id>', methods=['GET'])
 def get_ratings(post_id):
@@ -83,7 +81,6 @@ def get_ratings(post_id):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
->>>>>>> Stashed changes
 
 
 # Update average taste rating of a post

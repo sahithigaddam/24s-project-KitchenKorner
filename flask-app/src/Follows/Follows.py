@@ -41,16 +41,17 @@ def add_follower():
     
     return 'Success!'
 
+# Unfollow a user
 @follows.route('/follows', methods=['DELETE'])
 def remove_follower():
-        # Query to get the sender ID
+    # Query to get the follower ID
     follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
     current_app.logger.info(follower_query)
 
     cursor = db.get_db().cursor()
     cursor.execute(follower_query)
     follower_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
-    follower_id = follower_result[0]  # Extract the sender ID from the result
+    follower_id = follower_result[0]  # Extract the follower ID from the result
 
     data = request.get_json()
     cursor = db.get_db().cursor()

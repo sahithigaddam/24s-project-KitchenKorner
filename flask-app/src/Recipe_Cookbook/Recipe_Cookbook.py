@@ -5,7 +5,7 @@ from src import db
 
 recipe_cookbook = Blueprint('recipe_cookbook', __name__)
 
-# Get all customers from the DB
+# Get recipe_details
 @recipe_cookbook.route('/recipe_cookbook', methods=['GET'])
 def get_recipe_cookbook():
     cursor = db.get_db().cursor()

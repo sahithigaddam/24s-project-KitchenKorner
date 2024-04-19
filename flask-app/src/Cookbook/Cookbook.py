@@ -1,8 +1,3 @@
-    # Cookbook_ID int PRIMARY KEY,
-    # Recipe_ID int NOT NULL,
-    # User_ID int NOT NULL,
-    # Modified_Datetime datetime,
-
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db

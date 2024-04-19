@@ -6,6 +6,7 @@ from src import db
 
 external_messages = Blueprint('external_messages', __name__)
 
+# Get external messages
 @external_messages.route('/external_messages/<user_id>', methods=['GET'])
 def get_external_message(user_id):
     cursor = db.get_db().cursor()
@@ -14,6 +15,7 @@ def get_external_message(user_id):
     message = cursor.fetchone()
     return make_response(jsonify({"message": message}), 200)
 
+# Send external message
 @external_messages.route('/external_messages', methods=['POST'])
 def send_external_message():
     data = request.get_json()

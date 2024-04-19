@@ -5,40 +5,47 @@ from src import db
 
 cookbook = Blueprint('cookbook', __name__)
 
-# Get all cookbooks from the DB
-@cookbook.route('/cookbook', methods=['GET'])
-def get_cookbook():
-
-    # get a cursor object from the database
-    cursor = db.get_db().cursor()
-
-    # use cursor to query the database for a list
-    cursor.execute('SELECT c.Cookbook_Name, r.Recipe_Name, r.Meal_Type FROM Recipes r JOIN Cookbook c ON  r.Recipe_ID = c.Recipe_ID')
-
-    # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
-
-    # create an empty dictionary object to use in 
-    # putting column headers together with data
-    json_data = []
-
-    # fetch all the data from the cursor
-    theData = cursor.fetchall()
-
-    # for each of the rows, zip the data elements together with
-    # the column headers. 
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
-
-    return jsonify(json_data)
-
 # Get cookbook name
-@cookbook.route('/cname/<Cookbook_ID>', methods=['GET'])
-def get_cookbook_name(Cookbook_ID):
-
-
+@cookbook.route('/cookbook', methods=['GET'])
+def get_cookbook_names():
     cursor = db.get_db().cursor()
-   
+    cursor.execute('select Cookbook_Name, Cookbook_ID from Cookbook')
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# # Get all cookbooks from the DB
+# @cookbook.route('/cookbook', methods=['GET'])
+# def get_cookbook():
+
+#     # get a cursor object from the database
+#     cursor = db.get_db().cursor()
+
+#     # use cursor to query the database for a list
+#     cursor.execute('SELECT c.Cookbook_Name, r.Recipe_Name, r.Meal_Type FROM Recipes r JOIN Cookbook c ON  r.Recipe_ID = c.Recipe_ID')
+
+#     # grab the column headers from the returned data
+#     column_headers = [x[0] for x in cursor.description]
+
+#     # create an empty dictionary object to use in 
+#     # putting column headers together with data
+#     json_data = []
+
+#     # fetch all the data from the cursor
+#     theData = cursor.fetchall()
+
+#     # for each of the rows, zip the data elements together with
+#     # the column headers. 
+#     for row in theData:
+#         json_data.append(dict(zip(column_headers, row)))
+
+#     return jsonify(json_data)
 
 # Get particular cookbook 
 @cookbook.route('/cookbookrec/<Cookbook_ID>', methods=['GET'])

@@ -43,9 +43,18 @@ def add_follower():
 
 @follows.route('/follows', methods=['DELETE'])
 def remove_follower():
+        # Query to get the sender ID
+    follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(follower_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(follower_query)
+    follower_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    follower_id = follower_result[0]  # Extract the sender ID from the result
+
     data = request.get_json()
     cursor = db.get_db().cursor()
     query = "DELETE FROM Follows WHERE Followee_ID = %s AND Follower_ID = %s"
-    cursor.execute(query, (data['Followee_ID'], data['Follower_ID']))
+    cursor.execute(query, (data['Followee_ID'], follower_id))
     db.get_db().commit()
     return make_response(jsonify({"message": "Follower removed successfully"}), 200)

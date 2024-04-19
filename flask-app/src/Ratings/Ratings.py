@@ -48,29 +48,11 @@ def add_new_filter_out():
     return 'Successfully added filter!'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Returns all ratings under a post
 @ratings.route('/ratings/<post_id>', methods=['GET'])
 def get_ratings(post_id):
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT * FROM Ratings WHERE Post_ID = %s', (Post_ID))
+    cursor.execute('SELECT * FROM Ratings WHERE Post_ID = %s', (post_id))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -82,51 +64,25 @@ def get_ratings(post_id):
     return the_response
 
 
+# # Update average taste rating of a post
+# @ratings.route('/ratings/<post_id>/<taste>', methods=['PUT'])
+# def update_taste_rating(post_id, taste):
+#     ratings_info = request.json
+#     post_id = ratings_info['Post_ID']
+#     taste = ratings_info['taste']
+    
+#     user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+#     current_app.logger.info(user_query)
 
+#     cursor = db.get_db().cursor()
+#     cursor.execute(user_query)
+#     user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+#     user_id = user_result[0]  # Extract the user ID from the result
 
-
-
-@filters.route('/filters', methods=['PUT'])
-def update_keywords_in():
-    filter_info = request.json
-    filter_id = filter_info['Filter_ID']
-    keyword_one = filter_info['Keyword_One']
-    keyword_two = filter_info['Keyword_Two']
-    keyword_three = filter_info['Keyword_Three']
-    keyword_four = filter_info['Keyword_Four']
-    keyword_five= filter_info['Keyword_Five']
-    keyword_six = filter_info['Keyword_Six']
-    keyword_seven = filter_info['Keyword_Seven']
-    keyword_eight = filter_info['Keyword_Eight']
-    keyword_nine = filter_info['Keyword_Nine']
-    keyword_ten = filter_info['Keyword_Ten']
-
-    query = 'UPDATE Keywords_In SET Keyword_One = %s, Keyword_Two = %s, Keyword_Three = %s, Keyword_Four = %s, Keyword_Five = %s, Keyword_Six = %s, Keyword_Seven = %s, Keyword_Eight = %s, Keyword_Nine = %s, Keyword_Ten = %s, where Filter_ID = %s'
-    data = (keyword_one, keyword_two, keyword_three, keyword_four, keyword_five, keyword_six, keyword_seven, keyword_eight, keyword_nine, keyword_ten, filter_id)
-    cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
-    db.get_db().commit()
-    return 'Filter updated!'
-
-
-
-
-
-
-
-# Update average taste rating of a post
-@ratings.route('/ratings/<post_id>', methods=['PUT'])
-def update_taste_rating(post_id):
-    ratings_info = request.json
-    rating_id = ratings_info['Rating_ID']
-    post_id = ratings_info['Post_ID']
-    user_id = ratings_info['User_ID']
-    taste = ratings_info['taste']
-
-    cursor = db.get_db().cursor()
-    cursor.execute('UPDATE Posts SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Taste = %s', (New_Taste_Rating, Post_ID))
-    db.get_db().commit()
-    return 'taste rating updated!'
+#     cursor = db.get_db().cursor()
+#     cursor.execute('UPDATE Posts SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Taste = %s', (New_Taste_Rating, Post_ID))
+#     db.get_db().commit()
+#     return 'taste rating updated!'
 
 # Delete the rating on a post
 @ratings.route('/ratings/<post_id>', methods=['DELETE'])
@@ -139,8 +95,16 @@ def delete_rating(post_id):
 # Adding a new rating about the actual time to a post
 @ratings.route('/ratings/<post_id>/<actual_time>', methods=['POST'])
 def add_actual_time_rating(post_id, actual_time):
+
+    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(user_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(user_query)
+    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    user_id = user_result[0]  # Extract the user ID from the result
+
     ratings_info = request.json
-    user_id = ratings_info['User_ID']
 
     cursor = db.get_db().cursor()
     cursor.execute('INSERT INTO Ratings (Post_ID, User_ID, Actual_Time) VALUES (%s, %s, %s)', (Post_ID, User_ID, Actual_Time))

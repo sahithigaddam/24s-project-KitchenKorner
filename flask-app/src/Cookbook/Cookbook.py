@@ -13,7 +13,7 @@ def get_cookbook():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list
-    cursor.execute('SELECT r.Recipe_Name, r.Meal_Type FROM Recipes r JOIN Cookbook c ON  r.Recipe_ID = c.Recipe_ID')
+    cursor.execute('SELECT c.Cookbook_Name, r.Recipe_Name, r.Meal_Type FROM Recipes r JOIN Cookbook c ON  r.Recipe_ID = c.Recipe_ID')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]

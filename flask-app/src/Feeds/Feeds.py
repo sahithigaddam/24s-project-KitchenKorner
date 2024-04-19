@@ -19,7 +19,7 @@ def get_feed(id):
     user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
     id = user_result[0]  # Extract the user ID from the result
 
-    query = 'SELECT Username, Recipe_Name, Expected_Time, Expected_Difficulty FROM Recipes JOIN Posts ON Recipes.Post_ID = Posts.Post_ID JOIN Users ON Users.User_ID = Posts.User_ID'
+    query = 'SELECT Username, Recipe_Name, Recipe_Image, Meal_Type, Cuisine, Expected_Time, Expected_Difficulty FROM Recipes JOIN Posts ON Recipes.Post_ID = Posts.Post_ID JOIN Users ON Users.User_ID = Posts.User_ID'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

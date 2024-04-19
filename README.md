@@ -18,7 +18,11 @@ This repo contains a boilerplate setup for spinning up 3 Docker containers:
 
 Welcome to our final project of the semester! Our goal was to create a social media app to share recipes within the Foodie community. 
 
-If you want to hear us explain our app and learn more about the 
+Our app allows food lovers to share their recipes to others. You can follow your favorite influencers, fitness gurus, friends, and family. You can save your favorite recipes to an unlimited amount of cookbooks
+
+
+
+If you want to hear us explain our app and learn more about the development process: view this link.
 
 
 

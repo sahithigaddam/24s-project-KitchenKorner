@@ -6,7 +6,7 @@ from src import db
 
 direct_messages = Blueprint('direct_messages', __name__)
 
-# Get direct messages with user
+# Get direct messages for a specific user
 @direct_messages.route('/direct_messages/<receiver_username>', methods=['GET'])
 def get_receiver_id(receiver_username):  
     
@@ -22,21 +22,21 @@ def get_receiver_id(receiver_username):
         json_data.append(dict(zip(column_headers, row)))
     return jsonify(json_data)
 
-# Get direct messages
-@direct_messages.route('/direct_messages/<sender_id>', methods=['GET'])
-def get_direct_message(sender_id):
+# # Get direct messages
+# @direct_messages.route('/direct_messages/<sender_id>', methods=['GET'])
+# def get_direct_message(sender_id):
 
-    query = 'SELECT Message_Text FROM Direct_Messages WHERE Sender_ID = ' + str(sender_id)
-    current_app.logger.info(query)
+#     query = 'SELECT Message_Text FROM Direct_Messages WHERE Sender_ID = ' + str(sender_id)
+#     current_app.logger.info(query)
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    column_headers = [x[0] for x in cursor.description]
-    json_data = []
-    the_data = cursor.fetchall()
-    for row in the_data:
-        json_data.append(dict(zip(column_headers, row)))
-    return jsonify(json_data)
+#     cursor = db.get_db().cursor()
+#     cursor.execute(query)
+#     column_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     the_data = cursor.fetchall()
+#     for row in the_data:
+#         json_data.append(dict(zip(column_headers, row)))
+#     return jsonify(json_data)
 
 # Send message to user on app
 @direct_messages.route('/direct_messages', methods=['POST'])

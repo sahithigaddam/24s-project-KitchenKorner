@@ -44,8 +44,8 @@ def add_follower():
     return 'Success!'
 
 # Unfollow a user
-@follows.route('/unfollows', methods=['DELETE'])
-def remove_follower():
+@follows.route('/follows/<id>', methods=['DELETE'])
+def remove_follower(id):
     # Query to get the follower ID
     follower_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
     current_app.logger.info(follower_query)
@@ -53,11 +53,11 @@ def remove_follower():
     cursor = db.get_db().cursor()
     cursor.execute(follower_query)
     follower_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
-    follower_id = follower_result[0]  # Extract the follower ID from the result
+    id = follower_result[0]  # Extract the follower ID from the result
 
     data = request.get_json()
     cursor = db.get_db().cursor()
     query = "DELETE FROM Follows WHERE Followee_ID = %s AND Follower_ID = %s"
-    cursor.execute(query, (data['Followee_ID'], follower_id))
+    cursor.execute(query, (data['Followee_ID'], id))
     db.get_db().commit()
     return make_response(jsonify({"message": "Follower removed successfully"}), 200)

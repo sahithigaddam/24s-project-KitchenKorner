@@ -46,7 +46,6 @@ def create_app():
     from src.Ingredients.Ingredients import ingredients
     from src.Posts.Posts import posts
     from src.Ratings.Ratings import ratings
-    from src.Recipe_Cookbook.Recipe_Cookbook import recipe_cookbook
     from src.Recipes.Recipes import recipes
     from src.Search.Search import search
     from src.Tags.Tags import tags
@@ -68,7 +67,6 @@ def create_app():
     app.register_blueprint(ingredients,    url_prefix='/i')
     app.register_blueprint(posts,    url_prefix='/p')
     app.register_blueprint(ratings,    url_prefix='/r')
-    app.register_blueprint(recipe_cookbook,    url_prefix='/r')
     app.register_blueprint(recipes,    url_prefix='/r')
     app.register_blueprint(search,    url_prefix='/s')
     app.register_blueprint(tags,    url_prefix='/t')

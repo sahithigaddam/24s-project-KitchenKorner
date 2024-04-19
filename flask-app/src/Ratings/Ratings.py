@@ -4,49 +4,14 @@ from src import db
 
 ratings = Blueprint('ratings', __name__)
 
-<<<<<<< Updated upstream
-# # Add a new exclusive filter
-# @ratings.route('/filters', methods=['POST'])
-# def add_new_filter_out():
-=======
 # Add a new rating to a post
 @ratings.route('/diff_rating', methods=['POST'])
 def add_new_difficulty_rating():
->>>>>>> Stashed changes
-    
+    the_data = request.json
 #     # collecting data from the request object 
 #     the_data = request.json
 #     current_app.logger.info(the_data)
 
-<<<<<<< Updated upstream
-#     #extracting the variable
-#     filter_id = the_data['Filter_ID']
-#     keyword_one = the_data['Keyword_One']
-#     keyword_two = the_data['Keyword_Two']
-#     keyword_three = the_data['Keyword_Three']
-#     keyword_four = the_data['Keyword_Four']
-#     keyword_five= the_data['Keyword_Five']
-#     keyword_six = the_data['Keyword_Six']
-#     keyword_seven = the_data['Keyword_Seven']
-#     keyword_eight = the_data['Keyword_Eight']
-#     keyword_nine = the_data['Keyword_Nine']
-#     keyword_ten = the_data['Keyword_Ten']
-
-#     # creating the query 
-#     query = 'insert into Keywords_Out (Filter_ID, Keyword_One, Keyword_Two, Keyword_Three, Keyword_Four, Keyword_Five, Keyword_Six, Keyword_Seven, Keyword_Eight, Keyword_Nine, Keyword_Ten) values ("'
-#     query += str(filter_id) + '", "'
-#     query += keyword_one + '", "'
-#     query += keyword_two + '", "'
-#     query += keyword_three + '", "'
-#     query += keyword_four + '", "'
-#     query += keyword_five + '", "'
-#     query += keyword_six + '", "'
-#     query += keyword_seven + '", "'
-#     query += keyword_eight + '", "'
-#     query += keyword_nine + '", "'
-#     query += keyword_ten + ')'
-#     current_app.logger.info(query)
-=======
     #extracting the variable
     rating_id = the_data['Rating_ID']
     actual_difficulty = the_data['Actual_Difficulty']
@@ -64,16 +29,12 @@ def add_new_difficulty_rating():
     query += post_id + '", "'
     query += user_id + ')'
     current_app.logger.info(query)
->>>>>>> Stashed changes
 
 #     # executing and committing the insert statement 
 #     cursor = db.get_db().cursor()
 #     cursor.execute(query)
 #     db.get_db().commit()
     
-<<<<<<< Updated upstream
-#     return 'Successfully added filter!'
-=======
     return 'Successfully added difficulty rating!'
 
 
@@ -111,7 +72,6 @@ def update_overall_diff_rating():
 
 
 
->>>>>>> Stashed changes
 
 
 # # Returns all ratings under a post
@@ -211,12 +171,6 @@ def update_overall_diff_rating():
 #     user_id = ratings_info['User_ID']
 #     actual_difficulty = ratings_info['Actual_Difficulty']
 
-<<<<<<< Updated upstream
-#     cursor = db.get_db().cursor()
-#     cursor.execute('UPDATE Ratings SET Rating_ID = %s, Post_ID = %s, User_ID = %s, Actual_Difficulty = %s', (New_Rating_Value, Post_ID, Actual_Difficulty))
-#     db.get_db().commit()
-#     return 'difficulty rating updated!'
-=======
 
 
 # Returns all ratings under a post
@@ -245,4 +199,3 @@ def get_ratings(post_id):
 
 
 
->>>>>>> Stashed changes

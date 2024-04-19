@@ -10,8 +10,16 @@ direct_messages = Blueprint('direct_messages', __name__)
 @direct_messages.route('/direct_messages/<receiver_id>', methods=['GET'])
 def get_receiver_id(receiver_id):  
     
-    query = 'SELECT Message_Text, Time_Sent FROM Direct_Messages JOIN Users\
-        ON Users.User_ID = Direct_Messages.Receiver_ID WHERE Receiver_ID = ' + str(receiver_id)
+    user_query = "SELECT User_ID FROM Users ORDER BY Created_At DESC LIMIT 1"
+    current_app.logger.info(user_query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(user_query)
+    user_result = cursor.fetchone()  # Fetch one row since we're expecting only one result
+    user_id = user_result[0]  # Extract the user ID from the result
+
+    query = 'SELECT Message_Text, Time_Sent FROM Direct_Messages WHERE Receiver_ID IN (\
+        ' + str(receiver_id) + ', ' + str(user_id) + ') AND Sender_ID IN (' + str(user_id) + ', ' + str(receiver_id) + ')'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
